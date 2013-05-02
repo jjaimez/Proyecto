@@ -14,7 +14,7 @@ public class Inmo {
         User e = new User();
         e.set("email", "user@email.com");
         e.set("first_name", "John");
-        e.set("last_name", "Doe");
+        e.set("last_name", "Pepe!");
         e.saveIt();
 
         System.out.println( "Hello World!" );
