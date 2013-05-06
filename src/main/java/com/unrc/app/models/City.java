@@ -8,7 +8,7 @@ public class City extends Model {
 
     public Boolean existCity(){
     	Boolean ret=true;
-    	if( findFirst("code = ?",get("code"))==null){
+    	if( City.findFirst("code = ?",get("code"))==null){
     		return false;
     	}
     	return ret;

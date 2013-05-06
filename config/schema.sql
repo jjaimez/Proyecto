@@ -37,4 +37,20 @@ _________________________________________________________________
 
 
 
+CREATE  TABLE `inmoapp_development`.`owners` (
+  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `first_name` VARCHAR(45) NOT NULL ,
+  `last_name` VARCHAR(45) NOT NULL ,
+  `dni` VARCHAR(45) NOT NULL ,
+  `email` VARCHAR(45) NULL DEFAULT NULL ,
+  `address_id` INT UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`, `dni`) ,
+  INDEX `fk_owners_address_idx` (`address_id` ASC) ,
+  CONSTRAINT `fk_owners_address`
+    FOREIGN KEY (`address_id` )
+    REFERENCES `inmoapp_development`.`addresses` (`id` )
+    ON DELETE RESTRICT
+    ON UPDATE CASCADE);
+
+
 

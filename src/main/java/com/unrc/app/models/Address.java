@@ -8,7 +8,7 @@ public class Address extends Model {
 
     public Boolean existAddress(){
     	Boolean ret=true;
-    	if( findFirst("city_id = ? and street = ? and num = ?" ,get("city_id") ,get("street"),get("num"))==null){
+    	if( Address.findFirst("city_id = ? and street = ? and num = ?" ,get("city_id") ,get("street"),get("num"))==null){
     		return false;
     	}
     	return ret;

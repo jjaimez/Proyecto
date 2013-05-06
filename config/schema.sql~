@@ -30,6 +30,7 @@ ALTER TABLE `inmoapp_development`.`addresses` CHANGE COLUMN `city_id` `city_id` 
 
 ALTER TABLE `inmoapp_development`.`addresses` CHANGE COLUMN `address` `street` VARCHAR(45) NOT NULL  ;
 
+ALTER TABLE `inmoapp_development`.`addresses` ADD COLUMN `neighborhood` VARCHAR(45) NULL  AFTER `num` ;
 
 
 _________________________________________________________________
