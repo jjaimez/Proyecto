@@ -8,7 +8,7 @@ public class ObjectOwner {
 	private String city;//ciudad
 	private int code;//codigo postal
 	private String street;//calle
-	private int num;//numero de domicilio
+	private String num;//numero de domicilio
 	private String neighborhood;//barrio
 	
 
@@ -19,7 +19,7 @@ public class ObjectOwner {
 		dni=null;
 		email=null;
 		street=null;
-		num=-1;
+		num=null;
 		neighborhood=null;
 		city=null;
 		code=-1;
@@ -37,7 +37,7 @@ public class ObjectOwner {
 	 * @param neighborhood
 	 */
 	public ObjectOwner(String firstName, String lastName, String dni,
-			String email, String city, int code, String street, int num,
+			String email, String city, int code, String street, String num,
 			String neighborhood) {
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -123,14 +123,14 @@ public class ObjectOwner {
 	/**
 	 * @return the num
 	 */
-	public int getNum() {
+	public String getNum() {
 		return num;
 	}
 
 	/**
 	 * @param num the num to set
 	 */
-	public void setNum(int num) {
+	public void setNum(String num) {
 		this.num = num;
 	}
 
@@ -176,4 +176,16 @@ public class ObjectOwner {
 		this.code = code;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Nombre: " + firstName + ", Apellido: " + lastName
+				+ ", dni: " + dni  + ", Ciudad: " + city
+				+ ", CP: " + code + ", Direccion: " + street + " " + num
+				+ ",  Barrio " + neighborhood + ", email: " + email;
+	}
+
+	
 }

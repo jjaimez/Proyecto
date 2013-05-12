@@ -13,20 +13,35 @@ public class ABMOwner {
 	}
 
 	public void createOwner(ObjectOwner owner){
-		City citBD = new City(owner.getCity(),owner.getCode());
-		citBD.createCity();
-		Address address= new Address(citBD.returnId(), owner.getStreet(), owner.getNum(),owner.getNeighborhood());
-		address.CreateAddress();
-		Owner datesOwner = new Owner(owner.getFirstName(), owner.getLastName(),owner.getDni(),owner.getEmail(), address.returnId());
-		datesOwner.createOwner();
+		City citBD = City.createCity(owner.getCity(),owner.getCode());
+		Address address =Address.CreateAddress(owner.getStreet(), owner.getNum(),owner.getNeighborhood(),citBD);
+		Owner.createOwner(owner.getFirstName(), owner.getLastName(),owner.getDni(),owner.getEmail(), address);
 	}
 	
+	public void deleteOwner(String dni){
+		Owner.deleteOwner(dni);
+	}
 	
-	//Anda MAL
-	public void deleteOwner(ObjectOwner owner){
-		Owner datesOwner = new Owner();
-		datesOwner.deleteOwner(owner.getDni());
-
-		
+	public void ConsultOwner(String dni){
+		ObjectOwner objectOwner = new ObjectOwner();
+		Owner owner= Owner.findByDni(dni);
+		if (owner!=null){
+			objectOwner.setFirstName(owner.getFirstName());
+			objectOwner.setLastName(owner.getLastName());
+			objectOwner.setDni(owner.getDni());
+			objectOwner.setEmail(owner.getEmail());
+			Address address= owner.parent(Address.class);
+			objectOwner.setStreet(address.getStreet());
+			objectOwner.setNum(address.getNum());
+			objectOwner.setNeighborhood(address.getNeighborhood());
+			City city= address.parent(City.class);
+			objectOwner.setCity(city.getName());
+			objectOwner.setCode(city.getCode());
+			System.out.println(objectOwner.toString());
+		}
+		else{
+			System.out.println("El dueño con dni "+dni+" no se encuentra registrado");
+		}
 	}
 }
+	

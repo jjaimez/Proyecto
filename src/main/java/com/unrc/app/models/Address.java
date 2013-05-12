@@ -4,67 +4,47 @@ import org.javalite.activejdbc.Model;
 
 
 public class Address extends Model {
-	private int cityId;//referencia a la ciudad 
-	public String street;//calle
-	private int num;//numero de domicilio
-	private String neighborhood;//barrio
     static{
-        validatePresenceOf("city_id","street","num");
+        validatePresenceOf("street").message("Por favor, ingrese la calle");
+        validatePresenceOf("num").message("Por favor, ingrese el numero de dirección");
+        validatePresenceOf("city_id");
     }
     
-	/**
-	 * 
-	 */
-	public Address() {
-	}
-
-	/**
-	 * @param cityId
-	 * @param street
-	 * @param num
-	 * @param neighborhood
-	 */
-	public Address(int cityId, String street, int num, String neighborhood) {
-		this.cityId = cityId;
-		this.street = street;
-		this.num = num;
-		this.neighborhood = neighborhood;
-	}
-
-	
 	//Crea una direccion en la base de datos
-	public void CreateAddress() {
-    	set("city_id",cityId,"street",street,"num",num,"neighborhood",neighborhood);
-    	if (!existAddress()){
-    		saveIt();
+	public static Address CreateAddress(String street, String num, String neighborhood, City city ) {
+		Address address= create("street",street,"num",num,"neighborhood",neighborhood);
+    	if (!existAddress(street,num, city.getInteger("id"))){
+    		city.add(address);
+    		address.saveIt();
+ 	
     	}
+    	return (findByAddress(street,num,city.getInteger("id")));
 	}
 
 	//retorna un valor booleano si existe una direccion en la base de datos
-	public Boolean existAddress(){
+	private static Boolean existAddress(String street, String num, int idCity){
     	Boolean ret=true;
-    	if( Address.first("city_id = ? and street = ? and num = ?" ,cityId ,street,num)==null){
+    	if( Address.first("city_id = ? and street = ? and num = ?" ,idCity ,street,num)==null){
     		return false;
     	}
     	return ret;
     } 
 	
-	//Retorna el modelo de una base de datos correspondiente a los datos del objeto
-    public Address returnModel(){
-    	return Address.first("city_id = ? and street = ? and num = ?" ,cityId ,street,num);
-    }
-    
-    //Retorna el id de el modelo
-    public Integer returnId(){
-    	if (existAddress()){
-    		return returnModel().getInteger("id");
-    	}
-    	else{
-    		return -1;
-    	}
-    }
-    
-		
+	public static Address findByAddress(String street, String num, int idCity){
+		return (Address.findFirst("city_id = ? and street = ? and num = ?" ,idCity ,street,num));
+	}
+	
+	public String getStreet(){
+		return (getString("street"));
+	}
+	public String getNum(){
+		return (getString("num"));
+	}
+	
+	public String getNeighborhood(){
+		return (getString("neighborhood"));
+	}
+	
     public void deleteAddress(){
     	int idCity= getInteger("city_id") ;
     	this.delete();
@@ -73,4 +53,5 @@ public class Address extends Model {
 			City.delete("id = ?", idCity );
 		}
     }
+
 }
