@@ -34,3 +34,11 @@ CREATE  TABLE `inmoapp_development`.`real_estates` (
   `email` VARCHAR(45) NULL DEFAULT NULL ,
   `address_id` INT UNIQUE NOT NULL ,
   PRIMARY KEY (`id`, `name`) );
+
+CREATE  TABLE `inmoapp_development`.`owners_real_estates` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `owner_id` INT NULL ,
+  `real_estate_id` INT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) );
+

@@ -35,10 +35,10 @@ CREATE  TABLE `inmoapp_development`.`real_estates` (
   `address_id` INT UNIQUE NOT NULL ,
   PRIMARY KEY (`id`, `name`) );
 
+DROP TABLE IF EXISTS `inmoapp_development`.`owners_real_estates`;
 CREATE  TABLE `inmoapp_development`.`owners_real_estates` (
-  `id` INT NOT NULL ,
+  `id` INT NOT NULL AUTO_INCREMENT,
   `owner_id` INT NULL ,
   `real_estate_id` INT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) );
-

@@ -31,8 +31,10 @@ public class Owner extends Model {
 			Iterator<String> itr = realEstates.iterator();
   	  		while (itr.hasNext()){
   	  			String name = (String)itr.next();
-  	  			RealEstate realEstate = RealEstate.findByName(name);
-  	  	  		realEstate.add(realEstate);
+  	  			if(RealEstate.existRealEstate(name)){
+  	  				RealEstate realEstate = RealEstate.findByName(name);
+  	  	  	  		owner.add(realEstate);	
+  	  			}
   	  		}
 			owner.saveIt();
 		}
@@ -56,6 +58,12 @@ public class Owner extends Model {
 	
 	public static void deleteOwner(String dni){
 		Owner ownerForDelete = findByDni(dni);
+		List<RealEstate> removeRelation = ownerForDelete.getAll(RealEstate.class);
+		Iterator<RealEstate> itr = removeRelation.iterator();
+	  		while (itr.hasNext()){
+	  			RealEstate realEstate = (RealEstate)itr.next();
+	  			ownerForDelete.remove(realEstate);
+	  		}
 		int idAddress = ownerForDelete.getInteger("address_id");
 		ownerForDelete.delete();
 		if (null==Owner.findFirst("address_id = ?", idAddress)){
