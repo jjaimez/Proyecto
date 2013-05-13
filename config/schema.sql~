@@ -1,40 +1,36 @@
-DROP TABLE IF EXISTS users;
-CREATE TABLE users(
-  id  int(11) NOT NULL  auto_increment PRIMARY KEY,
-  email VARCHAR(60),
-  first_name VARCHAR(56),
-  last_name VARCHAR(56)
-);
-
-CREATE  TABLE `inmoapp_development`.`cities` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(45) NOT NULL ,
-  `code` INT(11) UNSIGNED NOT NULL ,
-  PRIMARY KEY (`id`) );
-____________________________________________________________________
-
+DROP TABLE IF EXISTS `inmoapp_development`.`addresses`;
 CREATE  TABLE `inmoapp_development`.`addresses` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `address` VARCHAR(45) NOT NULL ,
-  `city_id` INT(10) NOT NULL ,
-  `num` INT(10) NOT NULL ,
+  `id` INT UNIQUE NOT NULL AUTO_INCREMENT ,
+  `street` VARCHAR(45) NOT NULL ,
+  `num` VARCHAR(45) NOT NULL ,
+  `neighborhood` VARCHAR(45) NULL DEFAULT NULL ,
+  `city_id` INT NOT NULL ,
   PRIMARY KEY (`id`) );
 
-ALTER TABLE `inmoapp_development`.`addresses` CHANGE COLUMN `city_id` `city_id` INT(10) UNSIGNED NOT NULL  , 
-  ADD CONSTRAINT `fk_addresses_1`
-  FOREIGN KEY (`city_id` )
-  REFERENCES `inmoapp_development`.`cities` (`id` )
-  ON DELETE RESTRICT
-  ON UPDATE CASCADE
-, ADD INDEX `fk_addresses_1_idx` (`city_id` ASC) ;
 
-ALTER TABLE `inmoapp_development`.`addresses` CHANGE COLUMN `address` `street` VARCHAR(45) NOT NULL  ;
+DROP TABLE IF EXISTS `inmoapp_development`.`cities`;
+CREATE  TABLE `inmoapp_development`.`cities` (
+  `id` INT UNIQUE NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NOT NULL ,
+  `code` INT NOT NULL ,
+  PRIMARY KEY (`id`) );
 
-ALTER TABLE `inmoapp_development`.`addresses` ADD COLUMN `neighborhood` VARCHAR(45) NULL  AFTER `num` ;
+DROP TABLE IF EXISTS `inmoapp_development`.`owners`;
+CREATE  TABLE `inmoapp_development`.`owners` (
+  `id` INT UNIQUE NOT NULL AUTO_INCREMENT ,
+  `first_name` VARCHAR(45) NOT NULL ,
+  `last_name` VARCHAR(45) NOT NULL ,
+  `dni` VARCHAR(45) NOT NULL ,
+  `email` VARCHAR(45) NULL DEFAULT NULL ,
+  `address_id` INT  NOT NULL ,
+  PRIMARY KEY (`id`, `dni`) );
 
-
-_________________________________________________________________
-
-
-
-
+DROP TABLE IF EXISTS `inmoapp_development`.`real_estates`;
+CREATE  TABLE `inmoapp_development`.`real_estates` (
+  `id` INT UNIQUE NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(45) NOT NULL ,
+  `phone_number` VARCHAR(45) NOT NULL ,
+  `web_site` VARCHAR(45) NOT NULL ,
+  `email` VARCHAR(45) NULL DEFAULT NULL ,
+  `address_id` INT UNIQUE NOT NULL ,
+  PRIMARY KEY (`id`, `name`) );

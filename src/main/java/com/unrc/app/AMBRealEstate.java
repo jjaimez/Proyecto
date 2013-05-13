@@ -10,7 +10,7 @@ import com.unrc.app.object.ObjectRealEstate;
 
 /**
  * @author jacinto
- *
+ *	
  */
 public class AMBRealEstate {
 
@@ -23,7 +23,7 @@ public class AMBRealEstate {
 	public void createRealEstate(ObjectRealEstate realEstate){
 		City citBD = City.createCity(realEstate.getCity(),realEstate.getCode());
 		Address address =Address.CreateAddress(realEstate.getStreet(), realEstate.getNum(),realEstate.getNeighborhood(),citBD);
-		RealEstate.createRealEstate(realEstate.getName(),realEstate.getPhoneNumber(), realEstate.getWebSite(),realEstate.getEmail(), address);
+		RealEstate.createRealEstate(realEstate.getName(),realEstate.getPhoneNumber(), realEstate.getWebSite(),realEstate.getEmail(), address, realEstate.getOwners());
 	}
 	
 	public void deleteRealEstate(String name){

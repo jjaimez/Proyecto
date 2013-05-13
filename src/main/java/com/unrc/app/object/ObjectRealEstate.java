@@ -3,6 +3,10 @@
  */
 package com.unrc.app.object;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author jacinto
  *
@@ -17,7 +21,7 @@ public class ObjectRealEstate {
 	private String street;//calle
 	private String num;//numero de domicilio
 	private String neighborhood;//barrio
-	
+	private List<String> owners;
 	
 	//Constructor vacio
 	public ObjectRealEstate() {
@@ -30,6 +34,7 @@ public class ObjectRealEstate {
 		street = null;
 		num = null;
 		neighborhood = null;
+		owners = null;
 		
 	}
 
@@ -43,9 +48,10 @@ public class ObjectRealEstate {
 	 * @param street
 	 * @param num
 	 * @param neighborhood
+	 * @param owners
 	 */
 	public ObjectRealEstate(String name,String phone_number,String web_site,String email,String city,int code,
-			String street,String num,String neighborhood) {
+			String street,String num,String neighborhood,String...owners) {
 		this.name = name;
 		this.phone_number = phone_number;
 		this.web_site = web_site;
@@ -55,6 +61,7 @@ public class ObjectRealEstate {
 		this.street = street;
 		this.num = num;
 		this.neighborhood = neighborhood;
+		this.owners = Arrays.asList(owners);
 	}
 
 	//Getters
@@ -129,6 +136,14 @@ public class ObjectRealEstate {
 		return neighborhood;
 	}
 
+
+	public List<String> getOwners() {
+		return owners;
+	}
+
+	public void setOwners(List<String> owners) {
+		this.owners = owners;
+	}
 
 	/**
 	 * @param name the name to set

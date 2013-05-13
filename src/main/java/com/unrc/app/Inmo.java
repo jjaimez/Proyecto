@@ -44,7 +44,7 @@ public class Inmo {
         ObjectRealEstate terra = new ObjectRealEstate("Terra Nova","(0358) 155075659","www.terranova.com","inmob-terra-nova@hotmial.com","Rio Cuarto",5800,"San Martin","695","centro");
         ambRealEstate.createRealEstate(terra);
         
-        ObjectRealEstate nf = new ObjectRealEstate("HF inmobiliaria","4631511","www.nfinmobiliaria.com","nelsonfuentespropiedades@gmail.com","Rio Cuarto",5800,"Dean Funes","495","");
+        ObjectRealEstate nf = new ObjectRealEstate("HF inmobiliaria","4631511","www.nfinmobiliaria.com","nelsonfuentespropiedades@gmail.com","Rio Cuarto",5800,"Dean Funes","495","","38.312.543","28.534.098","36.534.098");
         ambRealEstate.createRealEstate(nf);
         
         ObjectRealEstate capello = new ObjectRealEstate("capello S.A","0358 464 5929","capello-sa.com.ar","info@capello-sa.com.ar","Rio Cuarto",5800,"Alvear","1052","Centro");

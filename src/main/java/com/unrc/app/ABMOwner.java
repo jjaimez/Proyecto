@@ -15,7 +15,7 @@ public class ABMOwner {
 	public void createOwner(ObjectOwner owner){
 		City citBD = City.createCity(owner.getCity(),owner.getCode());
 		Address address =Address.CreateAddress(owner.getStreet(), owner.getNum(),owner.getNeighborhood(),citBD);
-		Owner.createOwner(owner.getFirstName(), owner.getLastName(),owner.getDni(),owner.getEmail(), address);
+		Owner.createOwner(owner.getFirstName(), owner.getLastName(),owner.getDni(),owner.getEmail(), address,owner.getRealEstates());
 	}
 	
 	public void deleteOwner(String dni){

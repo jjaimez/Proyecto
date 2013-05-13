@@ -1,5 +1,8 @@
 package com.unrc.app.object;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ObjectOwner {
 	private String firstName;//Nombre
 	private String lastName;//Apellido
@@ -10,7 +13,7 @@ public class ObjectOwner {
 	private String street;//calle
 	private String num;//numero de domicilio
 	private String neighborhood;//barrio
-	
+	private List<String> realEstates;
 
 	//Constructor vacio
 	public ObjectOwner() {
@@ -23,6 +26,7 @@ public class ObjectOwner {
 		neighborhood=null;
 		city=null;
 		code=-1;
+		realEstates=null;
 	}
 
 	/**
@@ -35,10 +39,11 @@ public class ObjectOwner {
 	 * @param street
 	 * @param num
 	 * @param neighborhood
+	 * @param realEstates
 	 */
 	public ObjectOwner(String firstName, String lastName, String dni,
 			String email, String city, int code, String street, String num,
-			String neighborhood) {
+			String neighborhood,String...realEstates) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.dni = dni;
@@ -48,6 +53,7 @@ public class ObjectOwner {
 		this.street = street;
 		this.num = num;
 		this.neighborhood = neighborhood;
+		this.realEstates = Arrays.asList(realEstates);
 	}
 
 	/**
@@ -83,6 +89,14 @@ public class ObjectOwner {
 	 */
 	public String getDni() {
 		return dni;
+	}
+
+	public List<String> getRealEstates() {
+		return realEstates;
+	}
+
+	public void setRealEstates(List<String> realEstates) {
+		this.realEstates = realEstates;
 	}
 
 	/**
