@@ -12,17 +12,20 @@ public class ABMOwner {
 		// TODO Auto-generated constructor stub
 	}
 
+	//Creo un dueño
 	public void createOwner(ObjectOwner owner){
 		City citBD = City.createCity(owner.getCity(),owner.getCode());
-		Address address =Address.CreateAddress(owner.getStreet(), owner.getNum(),owner.getNeighborhood(),citBD);
+		Address address =Address.createAddress(owner.getStreet(), owner.getNum(),owner.getNeighborhood(),citBD);
 		Owner.createOwner(owner.getFirstName(), owner.getLastName(),owner.getDni(),owner.getEmail(), address,owner.getRealEstates());
-	}
+	}//end createOwner
 	
+	//Borro un dueño
 	public void deleteOwner(String dni){
 		Owner.deleteOwner(dni);
 	}
 	
-	public void ConsultOwner(String dni){
+	//Obtengo los datos de un dueño que se encuentra en la base de datos
+	public ObjectOwner consultOwner(String dni){
 		ObjectOwner objectOwner = new ObjectOwner();
 		Owner owner= Owner.findByDni(dni);
 		if (owner!=null){
@@ -37,11 +40,43 @@ public class ABMOwner {
 			City city= address.parent(City.class);
 			objectOwner.setCity(city.getName());
 			objectOwner.setCode(city.getCode());
-			System.out.println(objectOwner.toString());
+			return objectOwner;
+		}
+		else{
+			return null;
+		}
+	}//end consulOwner
+	
+//-------------------MODIFICACIONES------------------------------------------------------	
+	public void updateOwner(String dni,String firstName, String lastName, String email,String nameCity, int code, String street, String num, String neighborhood){	
+		Owner owner= Owner.findByDni(dni);
+		if (owner!=null){
+			owner.setFirstName(firstName);
+			owner.setLastName(lastName);
+			owner.setEmail(email);
+			City city= City.findByCode(code);
+			if(city==null){
+				city= City.createCity(nameCity, code);
+			}
+			Address address= Address.findByAddress(street, num, city.getInteger("id"));
+			if (address==null){
+				int idAddress = owner.getInteger("address_id");
+				address=new Address();
+				address.setStreet(street);
+				address.setNum(num);
+				address.setNeighborhood(neighborhood);
+				city.add(address);
+				address.saveIt();
+				address.add(owner);
+				if (null==Owner.findFirst("address_id = ?", idAddress)){
+					Address add= Address.findById(idAddress);
+					System.out.println("dasdasd"+idAddress);
+					add.deleteAddress();
+				}
+			}
 		}
 		else{
 			System.out.println("El dueño con dni "+dni+" no se encuentra registrado");
 		}
-	}
+	}//end updateOwner
 }
-	

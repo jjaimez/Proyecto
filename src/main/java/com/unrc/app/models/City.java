@@ -3,6 +3,7 @@ import org.javalite.activejdbc.Model;
 
 public class City extends Model {
     static{
+    	//valido que la ciudad tenga nombre y codigo postal
         validatePresenceOf("name").message("Por favor, ingrese el nombre de la ciudad");
         validatePresenceOf("code").message("Por favor, ingrese el codigo postal de la ciudad");
     }
@@ -14,11 +15,12 @@ public class City extends Model {
     		return false;
     	}
     	return ret;
-    }
+    }//end existcity
 	
+	//Retorno el modelo de una ciudad que se busca en la BD por el codigo postal
 	public static City findByCode(int code){
 		return (findFirst("code = ?", code));
-	}
+	}//end findByCode
  		
 	//Crea un modelo y lo registra en la base de datos si es que ya no existe, en caso de existir no hace nada
     public static City createCity(String name, int code){
@@ -27,12 +29,21 @@ public class City extends Model {
         	city.saveIt();
         }
         return findByCode(code);
-    }
+    }//end createCity
     
+    //Obtengo el nombre de la ciudad
 	public String getName(){
 		return (getString("name"));
-	}
+	}//end getName
+	
+	//Obtengo el codigo postal
 	public int getCode(){
 		return (getInteger("code"));
-	}
+	}//end getCode
+	
+	//Seteo una ciudad
+	public void setCity(String name,int code){
+		set("name", name,"code",code);
+		saveIt();
+	}//end setCity
 }
