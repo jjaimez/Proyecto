@@ -1,8 +1,13 @@
 package com.unrc.app;
 
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+
 import com.unrc.app.models.Address;
 import com.unrc.app.models.City;
 import com.unrc.app.models.Owner;
+import com.unrc.app.models.RealEstate;
 import com.unrc.app.object.ObjectOwner;
 
 
@@ -24,6 +29,7 @@ public class ABMOwner {
 		Owner.deleteOwner(dni);
 	}
 	
+	
 	//Obtengo los datos de un dueño que se encuentra en la base de datos
 	public ObjectOwner consultOwner(String dni){
 		ObjectOwner objectOwner = new ObjectOwner();
@@ -40,13 +46,13 @@ public class ABMOwner {
 			City city= address.parent(City.class);
 			objectOwner.setCity(city.getName());
 			objectOwner.setCode(city.getCode());
+			objectOwner.setRealEstates(owner.getRealEstates());
 			return objectOwner;
 		}
 		else{
 			return null;
 		}
 	}//end consulOwner
-	
 //-------------------MODIFICACIONES------------------------------------------------------	
 	public void updateOwner(String dni,String firstName, String lastName, String email,String nameCity, int code, String street, String num, String neighborhood){	
 		Owner owner= Owner.findByDni(dni);
@@ -68,7 +74,7 @@ public class ABMOwner {
 				city.add(address);
 				address.saveIt();
 				address.add(owner);
-				if (null==Owner.findFirst("address_id = ?", idAddress)){
+				if (null==Owner.findFirst("address_id = ?", idAddress)&&(null==RealEstate.findFirst("address_id = ?", idAddress))){
 					Address add= Address.findById(idAddress);
 					System.out.println("dasdasd"+idAddress);
 					add.deleteAddress();
@@ -79,4 +85,49 @@ public class ABMOwner {
 			System.out.println("El dueño con dni "+dni+" no se encuentra registrado");
 		}
 	}//end updateOwner
+	
+	
+	
+	//Agregar Real Estates a un owner existente
+	public void addRealEstate(String dni,String...realEstates){
+		Owner owner = Owner.findByDni(dni);
+		List<RealEstate> realEstatesContains = owner.getAll(RealEstate.class);
+		List<String> list = Arrays.asList(realEstates);
+		Iterator<String> itr = list.iterator();
+	  		while (itr.hasNext()){
+	  			String name = (String)itr.next();
+	  			if(RealEstate.existRealEstate(name)){
+	  				if(!realEstatesContains.contains(RealEstate.findByName(name))){
+	  					RealEstate realEstate = RealEstate.findByName(name);
+	  	  	  			owner.add(realEstate);
+	  				}
+	  			}
+	  		}
+	}
+	
+	//Elimina Real Estates de un owner
+	public void removeRealEstates(String dni,String...realEstates){
+		Owner owner = Owner.findByDni(dni);
+		List<RealEstate> realEstatesContains = owner.getAll(RealEstate.class);
+		List<String> list = Arrays.asList(realEstates);
+		Iterator<String> itr = list.iterator();
+	  		while (itr.hasNext()){
+	  			String name = (String)itr.next();
+	  			if(RealEstate.existRealEstate(name)){
+	  				if(!realEstatesContains.contains(RealEstate.findByName(name))){
+	  					RealEstate realEstate = RealEstate.findByName(name);
+	  					owner.remove(realEstate);
+	  				}	
+	  			}
+	  		}
+	}
+	
+	public void printOwner(String dni){
+		if (Owner.existOwner(dni)){
+			System.out.println(consultOwner(dni).toString());
+		}
+		else{
+			System.out.println("El dueño con dni "+dni+ " no se encuentra registrado" );
+		}
+	}
 }

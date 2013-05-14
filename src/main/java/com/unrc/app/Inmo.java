@@ -61,10 +61,26 @@ public class Inmo {
         //Trato de mostrar informacion de una inmobiliaria que no existe
         ambRealEstate.consultRealEstate("noexiste"); 
         
+
+        abmOwner.printOwner("28.534.098");
+        
         //Actualizo nombre,apellido, mail y calle de jazu 
         abmOwner.updateOwner("38.312.543","Jazu","JaimezRenom","mailRenom@gmail.com","Rio Cuarto",5800,"Cabrera","3012","Microcentro"); //Modifico datos
         
         //Actualizo ciudad y direccion de jazu
         abmOwner.updateOwner("38.312.543","Jazu","JaimezRenom","mailRenom@gmail.com","La rioja",312,"Jujuy","312","alberdi"); //Modifico ciudad
+    
+        //Agrego capello S.A a jazu
+        abmOwner.addRealEstate("38.312.543","Terra Nova","capello S.A");
+    
+        //borro el Real Estate HF inmobiliaria de jazu
+        abmOwner.removeRealEstates("38.312.543","HF inmobiliaria");
+        
+        //hago un update a un Real Estate inexistente
+        ambRealEstate.updateRealEstate("La casa","4812312","www.lacasanueva.com","nuevoMail@gmail.com","Jujuy",1829,"Talar","4125","El norte");
+       
+        //borro un Real Estate inexistente
+        ambRealEstate.deleteRealEstate("la casa");
+        
     }
 }

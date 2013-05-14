@@ -194,9 +194,10 @@ public class ObjectOwner {
 	 */
 	@Override
 	public String toString() {
-		return "Nombre: " + firstName + ", Apellido: " + lastName
-				+ ", dni: " + dni  + ", Ciudad: " + city
-				+ ", CP: " + code + ", Direccion: " + street + " " + num
-				+ ",  Barrio " + neighborhood + ", email: " + email;
+		return "Dueño [Nombre= " + firstName + ", apellido= " + lastName
+				+ ", dni= " + dni + ", email= " + email + ", ciudad= " + city
+				+ ", CP= " + code + ", calle= " + street + ", num= " + num
+				+ ", barrio= " + neighborhood + ", inmobiliarias= "
+				+ realEstates + "]";
 	}
 }

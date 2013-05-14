@@ -1,6 +1,7 @@
 package com.unrc.app.models;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.javalite.activejdbc.Model;
@@ -49,19 +50,21 @@ public class Owner extends Model {
 	
 	//Borro un dueño de la base de datos y si la dirección no la utiliza nadie la borra de la base de datos
 	public static void deleteOwner(String dni){
-		Owner ownerForDelete = findByDni(dni);
-		List<RealEstate> removeRelation = ownerForDelete.getAll(RealEstate.class);
-		Iterator<RealEstate> itr = removeRelation.iterator();
-	  		while (itr.hasNext()){
-	  			RealEstate realEstate = (RealEstate)itr.next();
-	  			ownerForDelete.remove(realEstate);
-	  		}
-		int idAddress = ownerForDelete.getInteger("address_id");
-		ownerForDelete.delete();
-		if (null==Owner.findFirst("address_id = ?", idAddress)&&(null==RealEstate.findFirst("address_id = ?", idAddress))){
-			Address add= Address.findById(idAddress);
-			add.deleteAddress();
-		}
+		if(existOwner(dni)){
+			Owner ownerForDelete = findByDni(dni);
+			List<RealEstate> removeRelation = ownerForDelete.getAll(RealEstate.class);
+			Iterator<RealEstate> itr = removeRelation.iterator();
+				while (itr.hasNext()){
+					RealEstate realEstate = (RealEstate)itr.next();
+	  				ownerForDelete.remove(realEstate);
+				}
+				int idAddress = ownerForDelete.getInteger("address_id");
+				ownerForDelete.delete();
+				if (null==Owner.findFirst("address_id = ?", idAddress)&&(null==RealEstate.findFirst("address_id = ?", idAddress))){
+					Address add= Address.findById(idAddress);
+					add.deleteAddress();
+				}
+		}		
 	}//end deleteOwner
 	
 	
@@ -84,6 +87,16 @@ public class Owner extends Model {
 	public String getEmail(){
 		return (getString("email"));
 	}//end getEmail
+	
+	//Obtengo la lista de inmobiliarias que tiene un dueño
+		public LinkedList<String> getRealEstates(){
+			Iterator<RealEstate> realEstates=getAll(RealEstate.class).iterator();
+			LinkedList<String> names = new LinkedList<String>();
+			while (realEstates.hasNext()){
+				names.add(realEstates.next().getName());
+			}
+			return names;
+		}
 	
 	//seteo firstName
 	public void setFirstName(String firstName){

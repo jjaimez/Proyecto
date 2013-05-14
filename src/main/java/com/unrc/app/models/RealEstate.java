@@ -1,6 +1,7 @@
 package com.unrc.app.models;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.javalite.activejdbc.Model;
@@ -56,21 +57,23 @@ public class RealEstate extends Model {
   		return RealEstate.findFirst("name = ?", name);
   	}//end findByName
   	
-  	//Borra una imnobiliaria en caso de que la dirección no se utilice más se borra tambien
+  //Borra una imnobiliaria en caso de que la dirección no se utilice más se borra tambien
   	public static void deleteRealEstate(String name){
-		RealEstate realEstateForDelete = findByName(name);
-		List<Owner> removeRelation = realEstateForDelete.getAll(Owner.class);
-		Iterator<Owner> itr = removeRelation.iterator();
-	  		while (itr.hasNext()){
-	  			Owner owner = (Owner)itr.next();
-	  			realEstateForDelete.remove(owner);
-	  		}
-		int idAddress = realEstateForDelete.getInteger("address_id");
-		realEstateForDelete.delete();
-		if (null==Owner.findFirst("address_id = ?", idAddress)&&(null==RealEstate.findFirst("address_id = ?", idAddress))){
-			Address add= Address.findById(idAddress);
-			add.deleteAddress();
-		}
+  		if(existRealEstate(name)){
+  			RealEstate realEstateForDelete = findByName(name);
+  			List<Owner> removeRelation = realEstateForDelete.getAll(Owner.class);
+  			Iterator<Owner> itr = removeRelation.iterator();
+  				while (itr.hasNext()){
+  					Owner owner = (Owner)itr.next();
+  					realEstateForDelete.remove(owner);
+  				}	
+  			int idAddress = realEstateForDelete.getInteger("address_id");
+  			realEstateForDelete.delete();
+  			if (null==Owner.findFirst("address_id = ?", idAddress)&&(null==RealEstate.findFirst("address_id = ?", idAddress))){
+  				Address add= Address.findById(idAddress);
+  				add.deleteAddress();
+  			}
+  		}	
 	}//end deleteRealEstate
 	
   	//Obtengo el nombre
@@ -92,4 +95,41 @@ public class RealEstate extends Model {
 	public String getEmail(){
 		return (getString("email"));
 	}//end getEmail
+	
+	//Obtengo la lista de dueños que tiene la inmobiliaria
+		public LinkedList<String> getOwners(){
+			Iterator<Owner> owners=getAll(Owner.class).iterator();
+			LinkedList<String> dnis = new LinkedList<String>();
+			while (owners.hasNext()){
+				dnis.add(owners.next().getDni());
+			}
+			return dnis;
+			
+		}
+	
+	//Seteo name
+	public void setName(String name){
+		set("name", name);
+		saveIt();
+	}//end setName
+	
+	//Seteo el telefono
+	public void setPhoneNumber(String phoneNumber){
+		set("phone_number", phoneNumber);
+		saveIt();
+	}//end setPhoneNumber
+	
+	//Seteo el telefono
+	public void setWebSite(String webSite){
+		set("web_site", webSite);
+		saveIt();
+	}//end setPhoneNumber
+	
+	//Seteo email 
+	public void setEmail(String email){
+		set("email", email);
+		saveIt();
+	}//end setEmail
+	
+	
 }  

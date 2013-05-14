@@ -208,11 +208,12 @@ public class ObjectRealEstate {
 	 */
 	@Override
 	public String toString() {
-		return "Nombre: " + name + ", Telefono: " + phone_number
-				+ ", Web " + web_site  + ", Ciudad: " + city
-				+ ", CP: " + code + ", Direccion: " + street + " " + num
-				+ ",  Barrio " + neighborhood + ", email: " + email;
+		return "Inmobiliaria [Nombre= " + name + ", telefono="
+				+ phone_number + ", sitio Web= " + web_site + ", email =" + email
+				+ ", ciudad =" + city + ", CP= " + code + ", calle =" + street
+				+ ", num =" + num + ", barrio=" + neighborhood
+				+ ", owners =" + owners + "]";
 	}
-	
+
 	
 }	
