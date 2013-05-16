@@ -3,7 +3,6 @@ package com.unrc.app.models;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import org.javalite.activejdbc.Model;
 
 
@@ -22,17 +21,6 @@ public class RealEstate extends Model {
     	}
     	return ret;
     }//end existeRealEstate
-    
-    //Estoy probando si no hace falta,creo que no hace falta, hasta ahora anda sin esta
-  /*  //Crea un RealEstate en la base de datos si es que no existe previamente
-  	public static RealEstate createRealEstate(String name,String phone_number,String web_site,String email, Address address){
-  		RealEstate realEstate= create("name",name,"phone_number",phone_number,"web_site",web_site, "email", email);
-  		if(!existRealEstate(name)){
-  			address.add(realEstate);
-  			realEstate.saveIt();
-  		}
-  		return (findByName(name));
-  	}//end createRealEstate*/
   	
   //Crea un RealEstate con relacion con owners
   	public static RealEstate createRealEstate(String name,String phone_number,String web_site,String email,Address address,List<String> dnis){
@@ -57,7 +45,9 @@ public class RealEstate extends Model {
   		return RealEstate.findFirst("name = ?", name);
   	}//end findByName
   	
-  //Borra una imnobiliaria en caso de que la dirección no se utilice más se borra tambien
+  /*Borra una imnobiliaria en caso de que la dirección no se utilice más
+   *  se borra tambien, borramos todas las relaciones de esta inmobiliaria con
+   *  los Owners y con Building */
   	public static void deleteRealEstate(String name){
   		if(existRealEstate(name)){
   			RealEstate realEstateForDelete = findByName(name);
@@ -66,13 +56,17 @@ public class RealEstate extends Model {
   				while (itr.hasNext()){
   					Owner owner = (Owner)itr.next();
   					realEstateForDelete.remove(owner);
-  				}	
+  				}
+  			List<Building> removeRelationB = realEstateForDelete.getAll(Building.class);
+  			Iterator<Building> itrb = removeRelationB.iterator();
+				while (itrb.hasNext()){
+					Building building = (Building)itrb.next();
+					realEstateForDelete.remove(building);
+				}
   			int idAddress = realEstateForDelete.getInteger("address_id");
   			realEstateForDelete.delete();
-  			if (null==Owner.findFirst("address_id = ?", idAddress)&&(null==RealEstate.findFirst("address_id = ?", idAddress))){
-  				Address add= Address.findById(idAddress);
-  				add.deleteAddress();
-  			}
+  			Address add= Address.findById(idAddress);
+  			add.deleteAddress();
   		}	
 	}//end deleteRealEstate
 	
@@ -96,6 +90,10 @@ public class RealEstate extends Model {
 		return (getString("email"));
 	}//end getEmail
 	
+	public int getAddressId(){
+		return getInteger("address_id");
+	}
+	
 	//Obtengo la lista de dueños que tiene la inmobiliaria
 		public LinkedList<String> getOwners(){
 			Iterator<Owner> owners=getAll(Owner.class).iterator();
@@ -106,6 +104,16 @@ public class RealEstate extends Model {
 			return dnis;
 			
 		}
+		
+	//Obtengo la lista de dueños que tiene la inmobiliaria
+		public LinkedList<Building> getBuildings(){
+			Iterator<Building> itrb= getAll(Building.class).iterator();
+			LinkedList<Building> buildings = new LinkedList<Building>();
+			while (itrb.hasNext()){
+				buildings.add(itrb.next());
+			}
+			return buildings;
+		}	
 	
 	//Seteo name
 	public void setName(String name){

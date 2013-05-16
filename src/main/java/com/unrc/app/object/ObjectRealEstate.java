@@ -33,7 +33,7 @@ public class ObjectRealEstate {
 		street = null;
 		num = null;
 		neighborhood = null;
-		owners = null;	
+		owners = null;
 	}//end constructor
 
 	/**
@@ -134,6 +134,7 @@ public class ObjectRealEstate {
 		return owners;
 	}//getOwners
 
+
 	//--------------SETTERS----------------------------------
 	
 	public void setOwners(List<String> owners) {
@@ -214,6 +215,5 @@ public class ObjectRealEstate {
 				+ ", num =" + num + ", barrio=" + neighborhood
 				+ ", owners =" + owners + "]";
 	}
-
+}
 	
-}	

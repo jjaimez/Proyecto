@@ -199,5 +199,5 @@ public class ObjectOwner {
 				+ ", CP= " + code + ", calle= " + street + ", num= " + num
 				+ ", barrio= " + neighborhood + ", inmobiliarias= "
 				+ realEstates + "]";
-	}
-}
+	}//End toString
+}//End objectOwner

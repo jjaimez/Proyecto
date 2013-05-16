@@ -4,8 +4,8 @@ import org.javalite.activejdbc.Model;
 public class Address extends Model {
     static{
     	//valido que una direccion tenga calle numero y ciudad
-        validatePresenceOf("street").message("Por favor, ingrese la calle");
-        validatePresenceOf("num").message("Por favor, ingrese el numero de dirección");
+        validatePresenceOf("street").message("Falta calle");
+        validatePresenceOf("num").message("Falta numero");
         validatePresenceOf("city_id");
     }
     
@@ -20,7 +20,7 @@ public class Address extends Model {
 	}//end CreateAddress
 
 	//retorna un valor booleano si existe una direccion en la base de datos
-	private static Boolean existAddress(String street, String num, int idCity){
+	public static Boolean existAddress(String street, String num, int idCity){
     	Boolean ret=true;
     	if( Address.first("city_id = ? and street = ? and num = ?" ,idCity ,street,num)==null){
     		return false;
@@ -32,6 +32,8 @@ public class Address extends Model {
 	public static Address findByAddress(String street,String num, int idCity){
 		return (Address.findFirst("city_id = ? and street = ? and num = ?" ,idCity ,street,num));
 	}//end findByAddress
+
+//------------------GETTERS-------------------------------------
 	
 	//Obtengo la calle
 	public String getStreet(){
@@ -48,6 +50,13 @@ public class Address extends Model {
 		return (getString("neighborhood"));
 	}//end getNeighborhood
 	
+	//Obtengo el id de la ciudad
+	public int getCityId(){
+		return (getInteger("city_id"));
+	}//end getCityId
+	
+//-------------------------SETTERS-------------------------------
+	
 	//seteo la calle
 	public void setStreet(String street){
 		set("street", street);
@@ -63,13 +72,15 @@ public class Address extends Model {
 		set("neighborhood", neighborhood);
 	}//end setNeighborhood
 	
-	//borro una direccion, en caso de que la las direcciones existentes en la base de datos no usen más la ciudad de esta
-	//borra la ciudad
+	/*borro una direccion, en caso de que la las direcciones existentes en la base de datos no usen más la ciudad de esta
+	borra la ciudad*/
     public void deleteAddress(){
-    	int idCity= getInteger("city_id") ;
-    	this.delete();
-		if (null==Address.findFirst("city_id = ?", idCity)){
-			City.delete("id = ?", idCity );
+		if (null==Owner.findFirst("address_id = ?", getId())&&(null==RealEstate.findFirst("address_id = ?", getId())&&(null==Building.findFirst("address_id = ?", getId())))){
+			int idCity= getInteger("city_id") ;
+			this.delete();
+			if (null==Address.findFirst("city_id = ?", idCity)){
+				City.delete("id = ?", idCity );
+			}
 		}
     }//end deleteAddress
 }

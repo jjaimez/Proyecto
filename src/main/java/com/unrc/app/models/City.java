@@ -4,8 +4,8 @@ import org.javalite.activejdbc.Model;
 public class City extends Model {
     static{
     	//valido que la ciudad tenga nombre y codigo postal
-        validatePresenceOf("name").message("Por favor, ingrese el nombre de la ciudad");
-        validatePresenceOf("code").message("Por favor, ingrese el codigo postal de la ciudad");
+        validatePresenceOf("name").message("Falta nombre ciudad");
+        validatePresenceOf("code").message("Falta codigo postal");
     }
 
 	//Retorna si un modelo se encuentra almacenado en la base de datos

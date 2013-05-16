@@ -32,7 +32,7 @@ CREATE  TABLE `inmoapp_development`.`real_estates` (
   `phone_number` VARCHAR(45) NOT NULL ,
   `web_site` VARCHAR(45) NOT NULL ,
   `email` VARCHAR(45) NULL DEFAULT NULL ,
-  `address_id` INT UNIQUE NOT NULL ,
+  `address_id` INT NOT NULL ,
   PRIMARY KEY (`id`, `name`) );
 
 DROP TABLE IF EXISTS `inmoapp_development`.`owners_real_estates`;
@@ -42,3 +42,18 @@ CREATE  TABLE `inmoapp_development`.`owners_real_estates` (
   `real_estate_id` INT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `id_UNIQUE` (`id` ASC) );
+
+DROP TABLE IF EXISTS `inmoapp_development`.`buildings`;
+CREATE  TABLE `inmoapp_development`.`buildings` (
+  `id` INT NOT NULL AUTO_INCREMENT ,
+  `description` VARCHAR(300) NULL ,
+  `price` VARCHAR(45) NULL ,
+  `offer` VARCHAR(45) NOT NULL ,
+  `type` VARCHAR(45) NOT NULL ,
+  `address_id` INT NOT NULL ,
+  `owner_id` INT NULL DEFAULT NULL ,
+  `real_estate_id` INT NULL DEFAULT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC) ,
+  UNIQUE INDEX `address_id_UNIQUE` (`address_id` ASC) );
+
