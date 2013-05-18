@@ -1,3 +1,9 @@
+/*  Analisis Y Diseño De Sistemas(3303)
+ *         Año 2013
+ * Proyecto:Web para informatizar revista inmobiliaria  
+ * Jaimez Jacinto, Pereyra Orcasitas Nicolas, Zensich Ezequiel Zensich
+ */
+
 package com.unrc.app.models;
 
 /*Datos a tener en cuenta:
@@ -55,7 +61,7 @@ public class Owner extends Model {
 	 * tambien se borran los Buildings asociados a este dueño(ya que no puede
 	 * existir un Building sin dueño) y las relaciones existentes con RealEstate
 	 */
-	public static void deleteOwner(String dni){
+	public static boolean deleteOwner(String dni){
 		if(existOwner(dni)){
 			Owner ownerForDelete = findByDni(dni);
 			List<RealEstate> removeRelation = ownerForDelete.getAll(RealEstate.class);//obetenemos los RealEstate asociados
@@ -68,13 +74,17 @@ public class Owner extends Model {
 			while (itrb.hasNext()){
 				Building building = itrb.next();
 				Address a= Address.findById(building.getInteger("address_id"));
-				building.deleteBuilding(a.getStreet(),a.getNum(),a.getCityId());//Borramos los builingAsociados
+				Building.deleteBuilding(a.getStreet(),a.getNum(),a.getCityId());//Borramos los builingAsociados
 			}
 			int idAddress = ownerForDelete.getInteger("address_id");
 			ownerForDelete.delete();
 			Address add= Address.findById(idAddress);
 			add.deleteAddress();
-		}		
+			return true;
+		}
+		else{
+			return false;
+		}
 	}//end deleteOwner
 	
 //----------------------GETTERS----------------------------------------------
@@ -104,14 +114,14 @@ public class Owner extends Model {
 	}
 	
 	//Obtengo la lista de inmobiliarias que tiene un dueño
-		public LinkedList<String> getRealEstates(){
-			Iterator<RealEstate> realEstates=getAll(RealEstate.class).iterator();
-			LinkedList<String> names = new LinkedList<String>();
-			while (realEstates.hasNext()){
-				names.add(realEstates.next().getName());
-			}
-			return names;
+	public LinkedList<String> getRealEstates(){
+		Iterator<RealEstate> realEstates=getAll(RealEstate.class).iterator();
+		LinkedList<String> names = new LinkedList<String>();
+		while (realEstates.hasNext()){
+			names.add(realEstates.next().getName());
 		}
+		return names;
+	}
 		
 //-------------------SETTERS----------------------------------------------
 		

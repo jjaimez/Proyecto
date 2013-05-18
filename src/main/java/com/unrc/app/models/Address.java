@@ -1,3 +1,9 @@
+/*  Analisis Y Diseño De Sistemas(3303)
+ *         Año 2013
+ * Proyecto:Web para informatizar revista inmobiliaria  
+ * Jaimez Jacinto, Pereyra Orcasitas Nicolas, Zensich Ezequiel Zensich
+ */
+
 package com.unrc.app.models;
 import org.javalite.activejdbc.Model;
 
@@ -74,13 +80,22 @@ public class Address extends Model {
 	
 	/*borro una direccion, en caso de que la las direcciones existentes en la base de datos no usen más la ciudad de esta
 	borra la ciudad*/
-    public void deleteAddress(){
-		if (null==Owner.findFirst("address_id = ?", getId())&&(null==RealEstate.findFirst("address_id = ?", getId())&&(null==Building.findFirst("address_id = ?", getId())))){
-			int idCity= getInteger("city_id") ;
-			this.delete();
-			if (null==Address.findFirst("city_id = ?", idCity)){
-				City.delete("id = ?", idCity );
-			}
+    public boolean deleteAddress(){
+    	if ( Address.existAddress(this.getStreet(), this.getNum(), this.getCityId())){
+    		if (null==Owner.findFirst("address_id = ?", getId())&&(null==RealEstate.findFirst("address_id = ?", getId())&&(null==Building.findFirst("address_id = ?", getId())))){
+    			int idCity= getInteger("city_id") ;
+    			this.delete();
+    			if (null==Address.findFirst("city_id = ?", idCity)){
+    				City.delete("id = ?", idCity );
+    			}
+    			return true;
+    		}
+    		else{
+    			return false;
+    		}
+    	}
+		else{
+			return false;
 		}
     }//end deleteAddress
 }

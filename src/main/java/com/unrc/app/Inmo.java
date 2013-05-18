@@ -1,3 +1,13 @@
+/*  Analisis Y Diseño De Sistemas(3303)
+ *         Año 2013
+ * Proyecto:Web para informatizar revista inmobiliaria  
+ * Jaimez Jacinto, Pereyra Orcasitas Nicolas, Zensich Ezequiel Zensich
+ * 
+ *Primer Sprint: este main tiene Altas, Modificaciones y Bajas de las distintas cosas, es utilizado para controlar el devido funcionamiento de todo. 
+ * 
+ *
+ */
+
 package com.unrc.app;
 
 

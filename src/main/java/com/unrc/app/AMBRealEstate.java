@@ -1,5 +1,7 @@
-/**
- * 
+/*  Analisis Y Diseño De Sistemas(3303)
+ *         Año 2013
+ * Proyecto:Web para informatizar revista inmobiliaria  
+ * Jaimez Jacinto, Pereyra Orcasitas Nicolas, Zensich Ezequiel Zensich
  */
 package com.unrc.app;
 
@@ -173,15 +175,15 @@ public class AMBRealEstate {
 			List<Owner> ownersContains = realEstate.getAll(Owner.class);
 			List<String> list = Arrays.asList(owners);
 			Iterator<String> itr = list.iterator();
-		  		while (itr.hasNext()){
-		  			String dni = (String)itr.next();
-		  			if(Owner.existOwner(dni)){
-		  				if(!ownersContains.contains(Owner.findByDni(dni))){
-		  					Owner owner = Owner.findByDni(dni);
-		  	  	  			realEstate.add(owner);
-		  				}
+		  	while (itr.hasNext()){
+		  		String dni = (String)itr.next();
+		  		if(Owner.existOwner(dni)){
+		  			if(!ownersContains.contains(Owner.findByDni(dni))){
+		  				Owner owner = Owner.findByDni(dni);
+		  	  			realEstate.add(owner);
 		  			}
 		  		}
+		  	}
 		}
 	}//end addOwners
 	

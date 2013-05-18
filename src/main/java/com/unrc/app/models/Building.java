@@ -1,3 +1,9 @@
+/*  Analisis Y Diseño De Sistemas(3303)
+ *         Año 2013
+ * Proyecto:Web para informatizar revista inmobiliaria  
+ * Jaimez Jacinto, Pereyra Orcasitas Nicolas, Zensich Ezequiel Zensich
+ */
+
 package com.unrc.app.models;
 
 import org.javalite.activejdbc.Model;
@@ -7,10 +13,10 @@ import com.unrc.app.enumerado.Type;
 public class Building extends Model {
 	static{
 		//valido que el price,addres_id,type, offer sean obligatorio
-		validatePresenceOf("price").message("");
+		validatePresenceOf("price");
 		validatePresenceOf("address_id");
-		validatePresenceOf("type").message("");
-		validatePresenceOf("offer").message("");
+		validatePresenceOf("type");
+		validatePresenceOf("offer");
 		//validatePresenceOf("owner_id"); //No puedo validar ya que el metodo add me guarda el modelo al agregar
 		//validatePresenceOf("real_estate_id"); //la dirección y me tira error
 	}
@@ -40,13 +46,17 @@ public class Building extends Model {
   	}//end 
 	//Buscar error 
 	//Borro un edificio de la base de datos y si la dirección no la utiliza nadie la borra de la base de datos
-	public static void deleteBuilding(String street, String num, int idCity){
+	public static boolean deleteBuilding(String street, String num, int idCity){
 		if (existBuilding(street, num, idCity)){
 			Building buildingForDelete= Building.findByBuilding(street, num, idCity);
 			int adId = buildingForDelete.getInteger("address_id");
 			buildingForDelete.delete();
 			Address address= Address.findById(adId);
-			address.deleteAddress();	
+			address.deleteAddress();
+			return true;
+		}
+		else{
+			return false;
 		}
 	}//end 
 
