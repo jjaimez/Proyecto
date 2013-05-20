@@ -23,14 +23,26 @@ public class Building extends Model {
 	
 	//Retorna un booleano diciendo si existe en la base de datos el modelo dado
 	public static Boolean existBuilding(String street, String num, int city_id){
-		int addId = Address.findByAddress(street, num, city_id).getInteger("id");
-		return(null!=Building.findFirst("address_id= ?", addId));
+		Address add = Address.findByAddress(street, num, city_id);
+		if (add!=null){
+			int addId=add.getInteger("id");
+			return(null!=Building.findFirst("address_id= ?", addId));
+		}	
+		else{
+			return false;
+		}
 	}//end existBuilding
 	
 	//Retorno el modelo de una Direccion que se busca en la BD el identificador del address
 	public static Building findByBuilding(String street, String num, int city_id){
-		int addId = Address.findByAddress(street, num, city_id).getInteger("id");
-		return Building.findFirst("address_id= ?", addId);
+		Address add = Address.findByAddress(street, num, city_id);
+		if (add!=null){
+			int addId=add.getInteger("id");
+			return Building.findFirst("address_id= ?", addId);
+		}
+		else{
+			return null;
+		}
 	}//end findByAddress
 	
 	//crea un edificio

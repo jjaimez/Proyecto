@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.unrc.app.models.TestSuite" time="1.979" tests="20" errors="0" skipped="0" failures="0">
+<testsuite name="com.unrc.app.models.TestSuite" time="4.406" tests="25" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="OpenJDK Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/java-7-openjdk-i386/jre/lib/i386"/>
@@ -58,24 +58,29 @@
     <property name="sun.desktop" value="gnome"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="shouldValidateCreate" classname="com.unrc.app.models.OwnerSpec" time="0.464"/>
-  <testcase name="shouldValidateDelete" classname="com.unrc.app.models.OwnerSpec" time="0.121"/>
-  <testcase name="shouldValidateFindByDni" classname="com.unrc.app.models.OwnerSpec" time="0.187"/>
-  <testcase name="shouldValidateExistOwner" classname="com.unrc.app.models.OwnerSpec" time="0.088"/>
-  <testcase name="shouldValidateMandatoryFields" classname="com.unrc.app.models.OwnerSpec" time="0.042"/>
-  <testcase name="shouldValidateCreate" classname="com.unrc.app.models.CitySpec" time="0.068"/>
-  <testcase name="shouldValidateDelete" classname="com.unrc.app.models.CitySpec" time="0.079"/>
-  <testcase name="shouldValidateFindByCode" classname="com.unrc.app.models.CitySpec" time="0.075"/>
-  <testcase name="shouldValidateExistCity" classname="com.unrc.app.models.CitySpec" time="0.077"/>
-  <testcase name="shouldValidateMandatoryFields" classname="com.unrc.app.models.CitySpec" time="0.019"/>
-  <testcase name="shouldValidateCreate" classname="com.unrc.app.models.RealEstateSpec" time="0.078"/>
-  <testcase name="shouldValidateDelete" classname="com.unrc.app.models.RealEstateSpec" time="0.088"/>
-  <testcase name="shouldValidateFindByName" classname="com.unrc.app.models.RealEstateSpec" time="0.098"/>
-  <testcase name="shouldValidateExistRealEsate" classname="com.unrc.app.models.RealEstateSpec" time="0.102"/>
-  <testcase name="shouldValidateMandatoryFields" classname="com.unrc.app.models.RealEstateSpec" time="0.029"/>
-  <testcase name="shouldValidateFindByAddress" classname="com.unrc.app.models.AddressSpec" time="0.081"/>
-  <testcase name="shouldValidateExistAddress" classname="com.unrc.app.models.AddressSpec" time="0.088"/>
-  <testcase name="shouldValidateCreate" classname="com.unrc.app.models.AddressSpec" time="0.077"/>
-  <testcase name="shouldValidateDelete" classname="com.unrc.app.models.AddressSpec" time="0.087"/>
-  <testcase name="shouldValidateMandatoryFields" classname="com.unrc.app.models.AddressSpec" time="0.031"/>
+  <testcase name="shouldValidateMandatoryFields" classname="com.unrc.app.models.OwnerSpec" time="0.898"/>
+  <testcase name="shouldValidateCreate" classname="com.unrc.app.models.OwnerSpec" time="0.213"/>
+  <testcase name="shouldValidateDelete" classname="com.unrc.app.models.OwnerSpec" time="0.187"/>
+  <testcase name="shouldValidateFindByDni" classname="com.unrc.app.models.OwnerSpec" time="0.144"/>
+  <testcase name="shouldValidateExistOwner" classname="com.unrc.app.models.OwnerSpec" time="0.089"/>
+  <testcase name="shouldValidateFindByCode" classname="com.unrc.app.models.CitySpec" time="0.131"/>
+  <testcase name="shouldValidateExistCity" classname="com.unrc.app.models.CitySpec" time="0.16"/>
+  <testcase name="shouldValidateMandatoryFields" classname="com.unrc.app.models.CitySpec" time="0.03"/>
+  <testcase name="shouldValidateCreate" classname="com.unrc.app.models.CitySpec" time="0.073"/>
+  <testcase name="shouldValidateDelete" classname="com.unrc.app.models.CitySpec" time="0.066"/>
+  <testcase name="shouldValidateFindByName" classname="com.unrc.app.models.RealEstateSpec" time="0.099"/>
+  <testcase name="shouldValidateExistRealEsate" classname="com.unrc.app.models.RealEstateSpec" time="0.111"/>
+  <testcase name="shouldValidateMandatoryFields" classname="com.unrc.app.models.RealEstateSpec" time="0.023"/>
+  <testcase name="shouldValidateCreate" classname="com.unrc.app.models.RealEstateSpec" time="0.109"/>
+  <testcase name="shouldValidateDelete" classname="com.unrc.app.models.RealEstateSpec" time="0.134"/>
+  <testcase name="shouldValidateFindByAddress" classname="com.unrc.app.models.AddressSpec" time="0.088"/>
+  <testcase name="shouldValidateExistAddress" classname="com.unrc.app.models.AddressSpec" time="0.3"/>
+  <testcase name="shouldValidateMandatoryFields" classname="com.unrc.app.models.AddressSpec" time="0.029"/>
+  <testcase name="shouldValidateCreate" classname="com.unrc.app.models.AddressSpec" time="0.617"/>
+  <testcase name="shouldValidateDelete" classname="com.unrc.app.models.AddressSpec" time="0.155"/>
+  <testcase name="shouldValidateFindByBuilding" classname="com.unrc.app.models.BuildingSpec" time="0.129"/>
+  <testcase name="shouldValidateExistBuilding" classname="com.unrc.app.models.BuildingSpec" time="0.11"/>
+  <testcase name="shouldValidateMandatoryFields" classname="com.unrc.app.models.BuildingSpec" time="0.022"/>
+  <testcase name="shouldValidateCreate" classname="com.unrc.app.models.BuildingSpec" time="0.361"/>
+  <testcase name="shouldValidateDelete" classname="com.unrc.app.models.BuildingSpec" time="0.128"/>
 </testsuite>

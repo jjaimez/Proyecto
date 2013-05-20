@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses( {  OwnerSpec.class ,CitySpec.class, RealEstateSpec.class, AddressSpec.class} )
+@Suite.SuiteClasses( {  OwnerSpec.class ,CitySpec.class, RealEstateSpec.class, AddressSpec.class, BuildingSpec.class} )
 
 
 
