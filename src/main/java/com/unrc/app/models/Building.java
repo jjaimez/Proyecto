@@ -7,8 +7,7 @@
 package com.unrc.app.models;
 
 import org.javalite.activejdbc.Model;
-import com.unrc.app.enumerado.Offer;
-import com.unrc.app.enumerado.Type;
+
 
 public class Building extends Model {
 	static{
@@ -46,7 +45,7 @@ public class Building extends Model {
 	}//end findByAddress
 	
 	//crea un edificio
-	public static Building createBuilding(Address address,String description,String price,Offer offer,Type type,Owner owner, RealEstate realEstate){
+	public static Building createBuilding(Address address,String description,String price,String offer,String type,Owner owner, RealEstate realEstate){
   		Building building= create("description",description,"price",price,"offer",offer.toString(), "type", type.toString());
   		if(!existBuilding(address.getStreet(),address.getNum(),address.getCityId())){
   			address.add(building);
@@ -56,6 +55,7 @@ public class Building extends Model {
   		}
   		return (findByBuilding(address.getStreet(),address.getNum(),address.getCityId()));
   	}//end 
+	
 	//Buscar error 
 	//Borro un edificio de la base de datos y si la dirección no la utiliza nadie la borra de la base de datos
 	public static boolean deleteBuilding(String street, String num, int idCity){
@@ -75,57 +75,37 @@ public class Building extends Model {
 	//Obtengo el precio
 	public String getPrice(){
 		return (getString("price"));
-	}//end getFirstName
+	}//end getPrice
+	
+	public String getDescription(){
+		return (getString("description"));
+	}//end getDescription
 	
 	//Obtengo la oferta
-	public Offer getOffer(){
-		String offer= (getString("offer"));
-		if (offer=="SALE"){
-			return Offer.SALE;
-		}
-		else{
-			return Offer.RENT;
-		}
+	public String getOffer(){
+		return(getString("offer"));
 	}//end 
 	
+	
 	//Obtengo el tipo
-	public Type getType(){
-		String type=(getString("type"));
-		if (type=="FARM"){
-			return Type.FARM;
-		}
-		if(type=="GARAGE"){
-			return Type.GARAGE;
-		}
-		if (type=="DEPARTAMENT"){
-			return Type.DEPARTAMENT;
-		}
-		if (type=="OFFICE"){
-			return Type.OFFICE;
-		}
-		if (type=="HOUSE"){
-			return Type.HOUSE;
-		}
-		else{
-			return Type.LAND;
-		}
+	public String getType(){
+		return(getString("type"));
 	}//end 
 		
 	//seteo el precio
 	public void setPrice(String price){
 		set("price", price);
 		saveIt();
-	}//end setFirstName
+	}//end setPrice
 
 	//Seteo la oferta
-	public void setOffer(Offer offer){
-		set("offer", offer.toString());
+	public void setOffer(String offer){
+		set("offer", offer);
 		saveIt();
 	}//end 
 		
 	//Seteo el tipo 
-	public void setType(Type type){
-		set("type", type.toString());
+	public void setType(String type){
 		saveIt();
 	}//end 
 		

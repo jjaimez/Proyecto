@@ -60,7 +60,7 @@ public class ObjectOwner {
 		this.realEstates = Arrays.asList(realEstates);
 	}//end constructor
 
-	//--------------GETTERS------------------
+	//--------------SETTERS------------------
 	/**
 	 * @param firstName the firstName to set
 	 */
@@ -127,6 +127,8 @@ public class ObjectOwner {
 	public void setRealEstates(List<String> realEstates) {
 		this.realEstates = realEstates;
 	}//end setRealEstates
+	
+//----------------GETTERS---------------------
 	
 	/**
 	 * @return the firstName

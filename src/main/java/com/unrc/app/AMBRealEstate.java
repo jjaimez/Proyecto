@@ -149,7 +149,6 @@ public class AMBRealEstate {
 				city= City.createCity(nameCity, code);
 			}	
 			Address oldAddress= Address.findById(realEstate.getAddressId());
-			System.out.println(oldAddress.getStreet());
 			Address newAddress= Address.findByAddress(street, num, city.getInteger("id"));
 			if (newAddress==null){
 				newAddress=new Address();

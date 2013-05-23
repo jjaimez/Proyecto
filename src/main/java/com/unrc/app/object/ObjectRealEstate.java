@@ -218,4 +218,3 @@ public class ObjectRealEstate {
 				+ ", owners =" + owners + "]";
 	}
 }
-	

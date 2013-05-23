@@ -6,16 +6,12 @@
 
 package com.unrc.app.object;
 
-import com.unrc.app.enumerado.Offer;
-import com.unrc.app.enumerado.Type;
-
-
 public class ObjectBuilding {
 
 	private String description;//Descripcion
 	private String price;//Precio
-	private Offer offer;//Oferta
-	private Type type;//Tipo
+	private String offer;//Oferta
+	private String type;//Tipo
 	private String street;//calle
 	private String num;//numero de domicilio
 	private String neighborhood;//barrio
@@ -52,8 +48,8 @@ public class ObjectBuilding {
 	 * @param dniOwner
 	 * @param nameRealEstate
 	 */
-	public ObjectBuilding(String description, String price, Offer offer,
-		Type type, String street, String num, String neighborhood,
+	public ObjectBuilding(String description, String price, String offer,
+		String type, String street, String num, String neighborhood,
 		String city, int code, String dniOwner, String nameRealEstate) {
 		this.description = description;
 		this.price = price;
@@ -99,28 +95,28 @@ public class ObjectBuilding {
 	/**
 	 * @return the offer
 	 */
-	public Offer getOffer() {
+	public String getOffer() {
 		return offer;
 	}
 
 	/**
 	 * @param offer the offer to set
 	 */
-	public void setOffer(Offer offer) {
+	public void setOffer(String offer) {
 		this.offer = offer;
 	}
 
 	/**
 	 * @return the type
 	 */
-	public Type getType() {
+	public String getType() {
 		return type;
 	}
 
 	/**
 	 * @param type the type to set
 	 */
-	public void setType(Type type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 
@@ -220,5 +216,18 @@ public class ObjectBuilding {
 	 */
 	public void setNameRealEstate(String nameRealEstate) {
 		this.nameRealEstate = nameRealEstate;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Inumebe [descripcion=" + description + ", precio="
+				+ price + ", tipoOferta=" + offer + ", tipoInmueble=" + type + ", calle="
+				+ street + ", numero=" + num + ", barrio=" + neighborhood
+				+ ", ciudad=" + city + ", CP=" + code + ", dni dueño="
+				+ dniOwner + ", nombre inmobiliaria=" + nameRealEstate + "]";
 	}	
+	
 }

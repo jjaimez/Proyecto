@@ -16,8 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.unrc.app.models.Building;
-import com.unrc.app.enumerado.Offer;
-import com.unrc.app.enumerado.Type;
+
 
 public class BuildingSpec {
 	 @Before
@@ -56,12 +55,12 @@ public class BuildingSpec {
 	    	LinkedList<String> list = new LinkedList<String>();
 	    	RealEstate r = RealEstate.createRealEstate("Name RealEstate", "phone_number RealEstate", "web_site RealEstate", "email RealEstate", a,list);
 	    	Owner o = Owner.createOwner("first name Owner", "last name Owner", "dni Owner", "email Owner", a,list);
-	    	Building b = Building.createBuilding(a,"description Building", "price Building", Offer.RENT, Type.OFFICE, o, r);
+	    	Building b = Building.createBuilding(a,"description Building", "price Building","rent" ,"office", o, r);
 	    	the(b).shouldBe("valid");
 	    	the(b).shouldNotBeNull();
 	    	the(b).shouldContain("description Building");
 	    	the(b).shouldContain("price Building");
-	    	Building b2 = Building.createBuilding(a,"description Building", "price Building2", Offer.RENT, Type.OFFICE, o, r);
+	    	Building b2 = Building.createBuilding(a,"description Building", "price Building2","rent", "office", o, r);
 	    	the(b2).shouldNotContain("price Building2");
 	    }
 	    
@@ -76,7 +75,7 @@ public class BuildingSpec {
 	    	LinkedList<String> list = new LinkedList<String>();
 	    	RealEstate r = RealEstate.createRealEstate("Name RealEstate", "phone_number RealEstate", "web_site RealEstate", "email RealEstate", a,list);
 	    	Owner o = Owner.createOwner("first name Owner", "last name Owner", "dni Owner", "email Owner", a,list);
-	    	Building b = Building.createBuilding(a,"description Building", "price Building", Offer.RENT, Type.OFFICE, o, r);
+	    	Building.createBuilding(a,"description Building", "price Building", "rent", "office", o, r);
 	    	the(Building.deleteBuilding("st Address","num Address",idCity)).shouldBeTrue();
 	    	the(Building.deleteBuilding("st Address","num Address",idCity)).shouldBeFalse();
 	    }
@@ -94,7 +93,7 @@ public class BuildingSpec {
 	    	LinkedList<String> list = new LinkedList<String>();
 	    	RealEstate r = RealEstate.createRealEstate("Name RealEstate", "phone_number RealEstate", "web_site RealEstate", "email RealEstate", a, list);
 	    	Owner o = Owner.createOwner("first name Owner", "last name Owner", "dni Owner", "email Owner", a,list);
-	    	Building b = Building.createBuilding(a2,"description Building", "price Building2", Offer.RENT, Type.OFFICE, o, r);
+	    	Building b = Building.createBuilding(a2,"description Building", "price Building2", "rent", "office", o, r);
 	    	Building b2 = Building.findByBuilding("st Address","num Address",idCityC2);
 	    	the(b2.getOffer()).shouldBeEqual(b.getOffer());	
 	    }
@@ -109,7 +108,7 @@ public class BuildingSpec {
 	    	LinkedList<String> list = new LinkedList<String>();
 	    	RealEstate r = RealEstate.createRealEstate("Name RealEstate", "phone_number RealEstate", "web_site RealEstate", "email RealEstate", a,list);
 	    	Owner o = Owner.createOwner("first name Owner", "last name Owner", "dni Owner", "email Owner", a,list);
-	    	Building b = Building.createBuilding(a,"description Building", "price Building", Offer.RENT, Type.OFFICE, o, r);
+	    	Building.createBuilding(a,"description Building", "price Building", "rent", "office", o, r);
 	    	the(Building.existBuilding("st Address","num Address",idCity)).shouldBeTrue();
 	    	the(Building.existBuilding("st AddressInex","num Address",1)).shouldBeFalse();
 	    }		
