@@ -33,6 +33,12 @@
         <version>1.6.4</version>
     </dependency>
 
+	<dependency>
+	      <groupId>com.sparkjava</groupId>
+	      <artifactId>spark-core</artifactId>
+	      <version>0.9.9.7-SNAPSHOT</version>
+	</dependency>
+
   </dependencies>
 
   <build>
@@ -103,5 +109,12 @@
     	</plugins>
     </pluginManagement>
   </build>
+  
+  <repositories>
+  	<repository>
+   	   <id>Spark repository</id>
+   	   <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+</repository>
+  </repositories>
 
 </project>
