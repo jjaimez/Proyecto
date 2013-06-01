@@ -64,7 +64,34 @@ public class ABMBuilding {
 		else{
 			return null;
 		}
-	}//end consulOwner			
+	}//end consultBuilding			
+	
+	
+	public static ObjectBuilding consultBuilding(String street, String num, int city_id){
+		ObjectBuilding objectBuilding = new ObjectBuilding();
+		Building building= Building.findByBuilding(street, num, city_id);
+		if (building!=null){
+			objectBuilding.setDescription(building.getDescription());
+			objectBuilding.setPrice(building.getPrice());
+			objectBuilding.setOffer(building.getOffer());
+			objectBuilding.setType(building.getType());
+			Address address= building.parent(Address.class);
+			objectBuilding.setStreet(address.getStreet());
+			objectBuilding.setNum(address.getNum());
+			objectBuilding.setNeighborhood(address.getNeighborhood());
+			City city= address.parent(City.class);
+			objectBuilding.setCity(city.getName());
+			objectBuilding.setCode(city.getCode());
+			Owner owner= building.parent(Owner.class);
+			objectBuilding.setDniOwner(owner.getDni());
+			RealEstate realEstate= building.parent(RealEstate.class);
+			objectBuilding.setNameRealEstate(realEstate.getName());
+			return objectBuilding;
+		}
+		else{
+			return null;
+		}
+	}//end consultBuilding
 	
 //-------------------MODIFICACIONES------------------------------------------------------	
 
