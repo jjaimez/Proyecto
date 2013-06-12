@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <script>function formulario(f) {
+if (f.firstName.value == '') { alert ('El nombre esta vacío');
+f.firstName.focus(); return false; }
+if (f.lastName.value == '') { alert ('El appelido esta vacío');
+f.lastName.focus(); return false; }
+if (f.dni.value == '') { alert ('El dni esta vacío');
+f.dni.focus(); return false; }
+if (f.code.value == '') { alert ('El codigo Postal esta vacío');
+f.code.focus(); return false; }
+if (f.num.value == '') { alert ('El Numero esta vacío');
+f.num.focus(); return false; }
+if (f.street.value == '') { alert ('La Calle esta vacía');
+f.street.focus(); return false; }
+return true; 
+}
+  </script>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>CrearDueño</title>
+
+  
+</head><body>
+<div style="text-align: center;"><big style="font-weight: bold; font-style: italic;"><big><big><big>Registrar
+Duenio</big></big></big></big><br>
+</div>
+
+<form method="post" action="/newOwner" name="newOwner" onsubmit="return formulario(this);"><br>
+  <br>
+  <br>
+  <big><big style="font-weight: bold; font-style: italic;"><big>Datos
+del Duenio</big></big></big><br>
+  <br>
+  <div style="margin-left: 40px;"><big><big>Nombre: <input name="firstName"> </big></big><big><big>*</big></big><big><big>&nbsp;
+Apellido:&nbsp;<input name="lastName"> </big></big><big><big>*</big></big><br>
+  <big><big>DNI:&nbsp;<input name="dni"> </big></big><big><big>*</big></big><big><big>&nbsp;
+Email: <input name="email">&nbsp; </big></big><br>
+  <big><big>Ciudad: <input name="city">&nbsp;&nbsp;&nbsp; Codigo
+Postal: <input name="code"></big></big> <big><big>*</big></big><br>
+  <big><big>Calle: <input name="street">&nbsp; </big></big><big><big>*</big></big><big><big>&nbsp;
+Numero: <input name="num">&nbsp; </big></big><big><big>*</big></big><big><big>&nbsp;
+Barrio: <input name="neighborhood"></big></big><br>
+  </div>
+  <big><big><span style="font-weight: bold; font-style: italic;"><br>
+  </span></big></big><big><big>*Campos obligatorios<br>
+  <br>
+  </big></big><big><big><span style="font-weight: bold; font-style: italic;"> <big>Inmobiliaria</big></span></big></big><br>
+  <big>(Recuerde que la inmobiliaria debe estar previamente registrada)<br>
+  </big>
+  <div style="margin-left: 40px;"><big><big>Agregar Inmobiliarias: <input size="40" name="realEstates"></big>
+(inserte nombre de las inmobiliarias &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp; separados por un ";")</big></div>
+  <br>
+  <br>
+  <input name="save" value="Guardar" type="submit">&nbsp; <input name="reset" value="Limpiar Formulario" type="reset"><br>
+</form>
+
+<br>
+
+<br>
+
+</body></html>

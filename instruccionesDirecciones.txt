@@ -1,0 +1,5 @@
+Dirrecion de la pagina principal: http://localhost:4567/inmo
+Dirrecion de un Owner: http://localhost:4567/consultOwner/dni
+Dirrecion de una inmobiliaria: http://localhost:4567/consultRealEstate/name
+Dirrecion de un inmueble: http://localhost:4567/consultBuilding/codigoPostal/calle/numero
+

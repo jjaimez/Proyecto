@@ -1,0 +1,519 @@
+/*  Analisis Y Diseño De Sistemas(3303)
+ *         Año 2013
+ * Proyecto:Web para informatizar revista inmobiliaria  
+ * Jaimez Jacinto, Pereyra Orcasitas Nicolas, Zensich Ezequiel Zensich
+ * 
+ *Primer Sprint: este main tiene Altas, Modificaciones y Bajas de las distintas cosas, es utilizado para controlar el devido funcionamiento de todo. 
+ * 
+ *
+ */
+
+package com.unrc.app;
+
+
+import static spark.Spark.*;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
+
+import org.javalite.activejdbc.*;
+
+import com.unrc.app.models.Building;
+import com.unrc.app.models.City;
+import com.unrc.app.models.Owner;
+import com.unrc.app.models.RealEstate;
+import com.unrc.app.object.ObjectBuilding;
+import com.unrc.app.object.ObjectOwner;
+import com.unrc.app.object.ObjectRealEstate;
+
+import spark.*;
+
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Map;
+
+
+
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
+import freemarker.template.Configuration;
+
+public class Inmo {
+public static void main(String[] args) {
+	
+	interfaz("/inmo","InmoApp.html");
+	interfaz("/inmo/building","Inmueble.html");
+	interfaz("/inmo/newBuilding","CrearInmueble.html");
+	interfaz("/inmo/owner","Dueño.html");
+	interfaz("/inmo/newOwner","CrearDueño.html");
+	interfaz("/inmo/realEstate","Inmobiliaria.html");
+	interfaz("/inmo/newRealEstate","CrearInmobiliaria.html");
+	
+	
+	
+	 //Lista todo los owners
+    get(new Route("/inmo/owners") {
+        @Override
+        public Object handle(Request request, Response response) {
+            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+           
+            String ret = "Owners not found";
+            LazyList<Owner> ol = Owner.findAll();
+            if (ol!=null){
+            	ret = "";
+            	Iterator<Owner> itro = ol.iterator();
+            	ABMOwner ambo = new ABMOwner();
+            	ret += "<html><head>" +
+		    			"<meta content='text/html; charset=ISO-8859-1' http-equiv='content-type'>" +
+		    			"<title>ListaInmobiliarias</title>" +
+		    			"</head><body>" +
+		    			"<div style='text-align: center;'><big style='font-weight: bold; font-style: italic;'><big><big><big>Listado" +
+		    			" de Duenios</big></big></big></big><br>" +
+		    			"</div>" +
+		    			"<br>" +
+		    			"<big><big style='font-weight: bold; font-style: italic;'><big>Duenios:</big></big></big><br>";
+            	while (itro.hasNext()){
+            		Owner ow = itro.next();
+            		ObjectOwner o = ambo.consultOwner(ow.getDni());
+            		ret += "<meta http-equiv='content-type' content='text/html; charset=utf-8'>" +
+		    				"<big><span style='font-weight: bold;'> Nombre: </span>"+o.getFirstName()+"<span style='font-weight: bold;'> Apellido: </span>"+o.getLastName()+" <span style='font-weight: bold;'> Dni: </span>"+o.getDni()+" <span style='font-weight: bold;'> Email:</span> "+o.getEmail()+"</big>"+" <span style='font-weight: bold;'> Calle: </span>"+o.getStreet()+" <span style='font-weight: bold;'> Num: </span> "+o.getNum()+"<span style='font-weight: bold;'> Barrio: </span>"+o.getNeighborhood()+" <span style='font-weight: bold;'> Ciudad: </span>"+o.getCity()+" <span style='font-weight: bold;'> CP: </span>"+o.getCode()+" <span style='font-weight: bold;'> Inmobiliarias: </span>"+o.getRealEstates() +
+		    				"<br>" +
+		    				"<br>" ;
+            	}
+            	ret += "</body></html>" ;
+            }	
+            Base.rollbackTransaction();
+            Base.close();
+            return ret;
+        }
+    });
+    
+    //Muestra el owner correspondiente al dni pasado como parametro
+    get(new Route("/consultOwner/:dni") {
+        @Override
+        public Object handle(Request request, Response response) {
+            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+            Base.openTransaction();
+            String ret = "Owner not found";
+            ABMOwner ambo = new ABMOwner();
+            if (Owner.existOwner(request.params(":dni"))) {
+            	ObjectOwner ow = ambo.consultOwner(request.params(":dni"));
+                ret = ow.toString();
+            }
+            Base.close();
+            return ret;
+        }
+    });
+    
+    
+    //Lista todo los realEstates
+    get(new Route("/inmo/realEstates") {
+        @Override
+        public Object handle(Request request, Response response) {
+            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+            Base.openTransaction();
+            String ret = "Real Estates not found";
+            LazyList<RealEstate> ol = RealEstate.findAll();
+            if (ol!=null){
+            	ret = "";
+            	Iterator<RealEstate> itro = ol.iterator();
+            	AMBRealEstate ambo = new AMBRealEstate();
+            	ret += "<html><head>" +
+			    			"<meta content='text/html; charset=ISO-8859-1' http-equiv='content-type'>" +
+			    			"<title>ListaInmobiliarias</title>" +
+			    			"</head><body>" +
+			    			"<div style='text-align: center;'><big style='font-weight: bold; font-style: italic;'><big><big><big>Listado" +
+			    			" de Inmobiliarias</big></big></big></big><br>" +
+			    			"</div>" +
+			    			"<br>" +
+			    			"<big><big style='font-weight: bold; font-style: italic;'><big>Duenios:</big></big></big><br>";
+            	while (itro.hasNext()){
+            		RealEstate ow = itro.next();
+            		ObjectRealEstate rs = ambo.consultRealEstate(ow.getName());
+            		ret += "<meta http-equiv='content-type' content='text/html; charset=utf-8'>" +
+			    				"<big><span style='font-weight: bold;'> Nombre: </span>"+rs.getName()+" <span style='font-weight: bold;'> Telefono: </span>"+rs.getPhoneNumber()+" <span style='font-weight: bold;'> Sitio Web: </span>"+rs.getWebSite()+" <span style='font-weight: bold;'> Email:</span> "+rs.getEmail()+"</big>"+" <span style='font-weight: bold;'> Calle: </span>"+rs.getStreet()+" <span style='font-weight: bold;'> Num: </span> "+rs.getNum()+"<span style='font-weight: bold;'> Barrio: </span>"+rs.getNeighborhood()+" <span style='font-weight: bold;'> Ciudad: </span>"+rs.getCity()+" <span style='font-weight: bold;'> CP: </span>"+rs.getCode()+" <span style='font-weight: bold;'> DNI Duenios: </span>"+rs.getOwners() +
+			    				"<br>" +
+			    				"<br>" ;
+            	}
+            	ret += "</body></html>" ;
+            }	
+            Base.rollbackTransaction();
+            Base.close();
+            return ret;
+        }
+    });
+    
+    //Lista el real estate con nombre ":name"
+    get(new Route("/consultRealEstate/:name") {
+        @Override
+        public Object handle(Request request, Response response) {
+            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+            Base.openTransaction();
+            AMBRealEstate ambo = new AMBRealEstate();
+            String ret = "Nombre invalido  - Real Estate not found";
+            if (RealEstate.existRealEstate(request.params(":name").replace("%20"," "))) {
+            	ObjectRealEstate o = ambo.consultRealEstate(request.params(":name").replace("%20"," "));
+            	ret = o.toString();
+            }	
+            Base.rollbackTransaction();
+            Base.close();
+            return ret;
+        }
+    });
+        
+    //Lista todo los buildings
+   	get(new Route("/inmo/buildings") {
+   			@Override
+   			public Object handle(Request request, Response response) {
+   				Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+   			    Base.openTransaction();
+   			    String ret = "Buildings not found";
+   			    LazyList<Building> bl = Building.findAll();
+   			    if (bl!=null){
+   			    	ret = "";
+   			    	Iterator<Building> itro = bl.iterator();
+   			    	ABMBuilding ambb = new ABMBuilding();
+   			    	ret += "<html><head>" +
+   			    			"<meta content='text/html; charset=ISO-8859-1' http-equiv='content-type'>" +
+   			    			"<title>ListaInmuebles</title>" +
+   			    			"</head><body>" +
+   			    			"<div style='text-align: center;'><big style='font-weight: bold; font-style: italic;'><big><big><big>Listado" +
+   			    			" de Inmuebles</big></big></big></big><br>" +
+   			    			"</div>" +
+   			    			"<br>" +
+   			    			"<big><big style='font-weight: bold; font-style: italic;'><big>Inmuebles:</big></big></big><br>";
+   			    	while (itro.hasNext()){
+   			    		Building bu = itro.next();
+   			    		ObjectBuilding b = ambb.consultBuilding(bu.getInteger("id"));
+   			    		ret += "<meta http-equiv='content-type' content='text/html; charset=utf-8'>" +
+   			    				"<big><span style='font-weight: bold;'> Descripcion: </span>"+b.getDescription()+" <span style='font-weight: bold;'> Oferta: </span>"+b.getOffer()+" <span style='font-weight: bold;'> Tipo: </span>"+b.getType()+" <span style='font-weight: bold;'> Precio: </span>"+b.getPrice()+" <span style='font-weight: bold;'> Calle: </span>"+b.getStreet()+" <span style='font-weight: bold;'> Num: </span> "+b.getNum()+"<span style='font-weight: bold;'> Barrio: </span>"+b.getNeighborhood()+" <span style='font-weight: bold;'> Ciudad: </span>"+b.getCity()+" <span style='font-weight: bold;'> CP: </span>"+b.getCode()+" <span style='font-weight: bold;'> DNI Duenio: </span>"+b.getDniOwner()+" <span style='font-weight: bold;'> Inmobiliaria:</span> "+b.getNameRealEstate()+"</big>" +
+   			    				"<br>" +
+   			    				"<br>" ;
+   			    	}
+   			    	ret += "</body></html>" ;
+   			    }	
+   				Base.rollbackTransaction();
+   			    Base.close();
+   				return ret;
+   			}
+   		});
+
+   	//Muestra el building de la direccion y ciudad pasado como parametro
+   		get(new Route("/consultBuilding/:code/:street/:num") {
+   			@Override
+   			public Object handle(Request request, Response response) {
+   				Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+   			    Base.openTransaction();
+   			    String ret = "Building not found";
+   			    String street = request.params(":street").replace("%20"," ");
+   			    String num = request.params(":num").replace("%20"," ");
+   			    Integer code = Integer.parseInt(request.params(":code"));
+   			    City city = City.findByCode(code);
+   			    if (city != null){
+   			    	if (Building.existBuilding(street, num, city.getInteger("id"))){ 
+   			    		ObjectBuilding ob = ABMBuilding.consultBuilding(street, num, city.getInteger("id"));
+   			    		ret = ob.toString();
+   			    	}
+   			    }
+   				Base.rollbackTransaction();
+   			    Base.close();
+   				return ret;
+   			}
+   		});
+    
+   	//Realiza una busqueda
+   		get(new Route("/inmo/searchengine") {
+   			@Override
+   			public Object handle(Request request, Response response) {
+   				Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+   			    Base.openTransaction();
+   			    String ret = "Search empty";
+   			    String dni = null;
+   			    String name = null;
+   			    String type = null;
+   			    boolean filterCity = false;
+   			    boolean filterPrice = false; 
+   			    int code = 0;
+   			    String minPrice = null;
+   			    String maxPrice = null;
+   			    SearchEngine st = new SearchEngine();
+   			    Set<String> params = request.queryParams();
+   			    if (params.contains("dni")) {
+   			    	dni = request.queryParams("dni");
+   			    }
+   			    if (params.contains("name")){
+   			    	name = request.queryParams("name").replace("%20", " ");
+   			    }
+   			    if (params.contains("type")){
+   			    	type = request.queryParams("type");
+   			    }
+   			    if (params.contains("filterCity")){
+   			    	filterCity = Boolean.parseBoolean(request.queryParams("filterCity"));
+   			    }
+   			    if (params.contains("filterPrice")){
+   			    	filterPrice = Boolean.parseBoolean(request.queryParams("filterPrice"));
+   			    }
+   			    if (params.contains("code")){
+   			    	code = Integer.parseInt(request.queryParams("code"));
+   			    }
+   			    if (params.contains("minPrice")){
+   			    	minPrice = request.queryParams("minPrice");
+   			    }
+   			    if (params.contains("maxPrice")){
+   			    	maxPrice = request.queryParams("maxPrice");
+   			    }
+   			    LinkedList<ObjectBuilding> list = st.search(dni, name, type, filterCity, filterPrice, code, minPrice, maxPrice);
+   			    System.out.println(list.size());
+   			    if (!list.isEmpty()){
+   			    	ret = Integer.toString(list.size());
+   			    	Iterator<ObjectBuilding> itr = list.iterator();
+   			    	while (itr.hasNext()) {
+   			    		ObjectBuilding b = itr.next();
+   			    		ret += b.toString()+" || ";
+   			    	}
+   			    }
+   			    Base.rollbackTransaction();
+   			    Base.close();
+   				return ret;
+   			}
+   		});	
+   	
+   	//Inserta un dueño
+   		post(new Route ("/newOwner") {        
+   	        public Object handle(Request request, Response response) {
+   	            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+   	            
+   	            Set<String> params = request.queryParams();
+   	            String ret = "<h1>Duenio No Registrado</h1>";
+   	            String firstName = null;
+   	            String lastName = null;
+   	            String dni = null;
+   	            String email = null;
+   	            String city = null;
+   	            int code = 0;
+   	            String street = null;
+   	            String num = null;
+   	            String neighborhood = null;
+   	            List<String> listRealEstates = new LinkedList<String>();
+				String [] rsName = null;
+   	            if (params.contains("dni")) {
+			    	dni = request.queryParams("dni");
+			    }
+			    if (params.contains("firstName")){
+			    	firstName = request.queryParams("firstName").replace("%20", " ");
+			    }
+			    if (params.contains("lastName")){
+			    	lastName = request.queryParams("lastName").replace("%20", " ");
+			    }
+			    if (params.contains("email")){
+			    	email = request.queryParams("email").replace("%20", " ");
+			    }
+			    if (params.contains("city")){
+			    	city = request.queryParams("city").replace("%20", " ");
+			    }
+			    if (params.contains("street")){
+			    	street = request.queryParams("street").replace("%20", " ");
+			    }
+			    if (params.contains("num")){
+			    	num = request.queryParams("num").replace("%20", " ");
+			    }
+			    if (params.contains("neighborhood")){
+			    	neighborhood = request.queryParams("neighborhood").replace("%20", " ");
+			    }
+			    if(params.contains("realEstates")){
+	   		    	rsName = request.queryParams("realEstates").split(";");
+	   		    }
+			    if (params.contains("code")){
+   			    	code = Integer.parseInt(request.queryParams("code"));
+   			    }
+			    //revisar condicion if
+			    if (firstName != null && lastName != null && dni != null){
+			    	int j=0;
+   			    	while(j <= rsName.length-1){
+   			    	listRealEstates.add(rsName[j]);
+   			    	j++;
+   			    	}
+			    	ObjectOwner ow = new ObjectOwner(firstName, lastName, dni, email, city, code, street, num, neighborhood, listRealEstates);
+			    	ABMOwner ambo = new ABMOwner();
+			    	ambo.createOwner(ow);
+			    	ret = "<h1>Duenio Registrado</h1>";
+			    }
+		    	Base.close();
+			    response.type("text/html");
+			    return ret;
+   	        }  
+   	    });
+	
+   	//Inserta una inmobiliaria
+   		post(new Route("/newRealEstate") {
+   		    @Override
+   		    public Object handle(Request request, Response response) {
+   		    	Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+   			
+   			    Set<String> params = request.queryParams();
+   			    String ret="<h1>No se creo la inmobiliaria</h1>";
+   				String name = null;
+   				String phone_number=null;
+   				String web_site=null;
+   				String email=null;
+   				String city = null;
+   				int code = -1;
+   				String street = null;
+   				String num = null;
+   				String neighborhood=null;
+   				List<String> listOwners = new LinkedList<String>();
+   				String [] owDni = null;
+   				if (params.contains("street")){
+   					street = request.queryParams("street").replace("%20", " ");
+	   			}
+   				if (params.contains("phone_number")){
+   					phone_number = request.queryParams("phone_number").replace("%20", " ");
+	   			}
+   				if (params.contains("web_site")){
+   					web_site = request.queryParams("web_site").replace("%20", " ");
+	   			}
+   				if (params.contains("email")){
+   					email = request.queryParams("email").replace("%20", " ");
+	   			}
+   				if (params.contains("num")){
+   			    	num = request.queryParams("num");
+   			    }
+	   			if (params.contains("name")){
+	   				name = request.queryParams("name").replace("%20", " ");
+	   			}
+	   		    if (params.contains("city")){
+	   		    	city = request.queryParams("city").replace("%20", " ");
+	   		    }
+			    if (params.contains("neighborhood")){
+	   		    	neighborhood = request.queryParams("neighborhood").replace("%20", " ");
+	   		    }
+	   		    if (params.contains("code")){
+   			    	code = Integer.parseInt(request.queryParams("code"));
+	   			}
+	   		    if(params.contains("owners")){
+	   		    	owDni = request.queryParams("owners").split(";");
+	   		    }
+	   		    //revisar condicion if
+	   			if(name != null && code != -1 && street != null && num != null){  
+	   				int j=0;
+   			    	while(j <= owDni.length-1){
+   			    	listOwners.add(owDni[j]);
+   			    	j++;
+   			    	}
+	   				ObjectRealEstate ob= new ObjectRealEstate(name,phone_number,web_site,email,city,code,street,num,neighborhood,listOwners);
+	   			    AMBRealEstate rs = new AMBRealEstate();
+	   			    rs.createRealEstate(ob);
+	   			    ret="<h1>La inmobiliaria fue creada</h1>";
+   			    }
+   			    Base.rollbackTransaction();
+   			    Base.close();
+   			    response.type("text/html");
+   				return ret;
+   		    }
+   		 });
+   		
+   	//Inserta un inmueble
+   	   	post(new Route("/newBuilding") {
+   	   			@Override
+   	   			public Object handle(Request request, Response response) {
+   	   				Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+   	   			    Base.openTransaction();
+   	   			    Set<String> params = request.queryParams();
+   	   			    String ret = "<h1> Building no creado </h1>";
+   	   			    String street = null;
+   	   			    String num = null;
+   	   			    String offer = null;
+   	   			    String type = null;
+   	   			    String dniOwner = null;
+   	   			    String nameRealEstate = null;
+   	   			    String description = null;
+   	   			    String price = null;
+   	   			    String neighborhood = null;
+   	   			    String city = null;
+   	   			    int code = -1;
+   	   			    if (params.contains("street")){
+   	   			    	street = request.queryParams("street").replace("%20", " ");
+   	   			    }
+   	   			    if (params.contains("num")){
+	   			    	num = request.queryParams("num");
+	   			    }
+   	   			    if (params.contains("offer")){
+   	   			    	offer = request.queryParams("offer");
+   	   			    }
+   	   			    if (params.contains("type")){
+   	   			    	type = request.queryParams("type");
+   	   			    }
+   	   			    if (params.contains("dni")){
+   	   			    	dniOwner = request.queryParams("dni");
+   	   			    }
+   	   			    if (params.contains("name")){
+   	   			    	nameRealEstate = request.queryParams("name").replace("%20", " ");
+   	   			    }
+   	   			    if (params.contains("description")){
+	   			    	description = request.queryParams("description").replace("%20", " ");
+	   			    }
+   	   			    if (params.contains("price")){
+   	   			    	price = request.queryParams("price").replace("%20", " ");
+   	   			    }
+   	   			    if (params.contains("city")){
+   	   			    	city = request.queryParams("city").replace("%20", " ");
+   	   			    }
+   	   			    if (params.contains("neighborhood")){
+   	   			    	neighborhood = request.queryParams("neighborhood").replace("%20", " ");
+   	   			    }
+   	   			    if (params.contains("code")){
+	   			    	code = Integer.parseInt(request.queryParams("code"));
+   	   			    }
+   	   			    if ( street != null && num != null && code != -1){
+   	   			    	ObjectBuilding ob = new ObjectBuilding(description, price, offer, type, street, num, neighborhood, city, code, dniOwner, nameRealEstate);
+   	   			    	ABMBuilding abmb = new ABMBuilding();
+   	   			    	abmb.createBuilding(ob);
+   	   			    	ret = "<h1> Building creado </h1>";
+   	   			    }
+   	   				Base.rollbackTransaction();
+   	   			    Base.close();
+   	   				response.type("text/html");
+   	   				return ret;
+   	   			}
+   	   		});
+}	
+
+public static void interfaz(String route, final String html){
+	get(new Route(route) {
+		public Object handle(Request request, Response response) {
+			Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/inmoapp_development", "root", "root");
+			Base.openTransaction();
+			StringWriter writer = new StringWriter();
+			final Configuration configuracion = new Configuration();	
+			configuracion.setClassForTemplateLoading(Inmo.class, "/");
+			Template plantillaInmoApp = null;
+			try {
+				plantillaInmoApp = configuracion.getTemplate(html);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Map<String, Object> buildingMap = new HashMap<String, Object>();
+			try {
+				plantillaInmoApp.process(buildingMap, writer);
+			} catch (TemplateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			Base.close();
+			 return writer;
+	     };
+		 });
+}
+
+}
+
+

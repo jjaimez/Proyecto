@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+  <script>function formulario(f) {
+if (f.name.value == '') { alert ('El nombre esta vacío');
+f.name.focus(); return false; }
+if (f.code.value == '') { alert ('El codigo postal está vacío');
+f.code.focus(); return false; }
+if (f.num.value == '') { alert ('El Numero esta vacío');
+f.num.focus(); return false; }
+if (f.street.value == '') { alert ('La Calle esta vacía');
+f.street.focus(); return false; }
+return true; }
+  </script>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>CrearInmobiliaria</title>
+
+  
+</head><body>
+<div style="text-align: center;"><big><big style="font-weight: bold; font-style: italic;"><big><big>Crear
+Inmobiliaria</big></big></big></big><br>
+</div>
+
+<form method="post" action="/newRealEstate" name="newRealEstate" onsubmit="return formulario(this);"> <big><big style="font-weight: bold; font-style: italic;"><big><br>
+Datos Inmobiliaria</big></big></big><br>
+  <br>
+  <div style="margin-left: 40px;"> <big><big>Nombre: <input name="name"></big></big><big><big>*</big></big><br>
+  <big><big>Telefono: <input name="phone_number"></big></big><br>
+  <big><big>Sitio Web: <input name="web_site">&nbsp;&nbsp; Email: <input name="email"></big></big><br>
+  <big><big>Ciudad: <input name="city">&nbsp;&nbsp; Codigo Postal: <input name="code"></big></big><big><big>*</big></big><br>
+  <big><big>Calle: <input name="street"> </big></big><big><big>* </big></big><big><big>Numero:
+  <input name="num">&nbsp; Barrio: <input name="neighborhood"></big></big><br>
+  </div>
+  <big><big> </big><br>
+  </big><big><big>*Campos obligatorios</big></big><br>
+  <big><br>
+  <big style="font-weight: bold; font-style: italic;"><big>Duenio</big></big></big>
+  <big><br>
+(Recuerde que el dueño debe estar previamente registrado)<br>
+  </big>
+  <div style="margin-left: 40px;"><big><big>Agregar Duenios: <input size="40" name="owners"></big> (inserte dni de los duenios separados
+por un ";")</big><br>
+  </div>
+  <big><br>
+  </big><br>
+  <input name="save" value="Guardar" type="submit">&nbsp;&nbsp;<input name="reset" value="Limpiar Formulario" type="reset"></form>
+
+<br>
+
+<br>
+
+</body></html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+  
+  <script>function formulario(f) {
+if (f.name.value == '') { alert ('El nombre de inmobiliaria esta vacío');
+f.name.focus(); return false; }
+if (f.dni.value == '') { alert ('El dni del dueño vacío');
+f.dni.focus(); return false; }
+if (f.code.value == '') { alert ('El codigo Postal esta vacío');
+f.code.focus(); return false; }
+if (f.num.value == '') { alert ('El Numero esta vacío');
+f.num.focus(); return false; }
+if (f.street.value == '') { alert ('La Calle esta vacía');
+f.street.focus(); return false; }
+if (f.offer.value == '') { alert ('El tipo de oferta está vacío');
+f.offer.focus(); return false; }
+if (f.type.value == '') { alert ('El tipo de inmueble está vacío');
+f.type.focus(); return false; }
+if (f.price.value == '') { alert ('El precio está vacío');
+f.price.focus(); return false; }
+return true; }
+  </script>
+  
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Crear Inmueble</title>
+
+  
+</head><body>
+<form method="post" action="/newBuilding" name="newBuilding" onsubmit="return formulario(this);">
+<div style="text-align: center;"> <big><big><big style="font-weight: bold; font-style: italic;"><big>Crear Inmueble</big></big></big></big><br>
+</div>
+<big><big><br>
+<big style="font-weight: bold; font-style: italic;">Duenio</big><br>
+</big></big>
+<div style="margin-left: 40px;"><big><big>Dni: <input name="dni"></big></big><big><big>*</big></big>
+</div>
+<big><big><big><span style="font-weight: bold; font-style: italic;"><br>
+Inmobiliaria</span></big><br>
+</big></big>
+<div style="margin-left: 40px;"><big><big>Nombre:<input name="name"></big></big><big><big>*</big></big>
+</div>
+<big><big><big style="font-style: italic; font-weight: bold;"><br>
+Inmueble</big><br>
+</big></big>
+<div style="margin-left: 40px;"><big><big>Ciudad: <input name="city">&nbsp;
+Codigo Postal: <input name="code"></big></big><big><big>*</big></big><big><big>&nbsp;
+Barrio:</big></big><input name="neighborhood"><br>
+</div>
+<div style="margin-left: 40px;"><big><big>Calle:<input name="street"></big></big><big><big>*</big></big><big><big>
+Numero:<input name="num"></big></big><big><big>*</big></big> </div>
+<div style="margin-left: 40px;"><big><big>Oferta:&nbsp;</big></big>
+<select name="offer">
+<option></option>
+<option value="Rent">Alquiler</option>
+<option value="Sale">Venta</option>
+</select>
+<big><big>*</big></big><big><big>
+&nbsp; Tipo:&nbsp;</big></big>
+<select name="type">
+<option></option>
+<option value="Office">Oficina</option>
+<option value="Land">Campo</option>
+<option value="House">Casa</option>
+<option value="Farm">Quinta</option>
+<option value="Departament">Departamento</option>
+<option value="Garage">Garage</option>
+</select>
+<big><big>*&nbsp;</big></big> <big><big>
+Precio: <small>$</small></big></big><input name="price"><big><big>*</big></big>
+</div>
+<div style="margin-left: 40px;"><big><big>Descripcion:</big></big><br>
+</div>
+<big><big> </big></big>
+<div style="margin-left: 40px;"><textarea cols="45" rows="5" name="description"></textarea><br>
+<br>
+<big><big>*Campos obligatorios</big></big><br>
+<br>
+</div>
+<big><big><input name="save" value="Guardar" type="submit"> <input name="reset" value="Limpiar Formulario" type="reset"><br>
+</big></big> <br>
+</form>
+</body></html>
